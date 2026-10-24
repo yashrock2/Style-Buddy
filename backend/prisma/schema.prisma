@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id              String             @id @default(cuid())
+  email           String             @unique
+  passwordHash     String
+  emailVerified    Boolean            @default(false)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  profile          Profile?
+  closetItems      ClosetItem[]
+  savedOutfits     SavedOutfit[]
+  refreshTokens    RefreshToken[]
+  emailVerifications EmailVerification[]
+}
+
+model Profile {
+  id                 String   @id @default(cuid())
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name               String?
+  gender             String?
+  bodyType           String?
+  undertone          String?
+  styles             Json?
+  occasions          Json?
+  onboardingCompleted Boolean @default(false)
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model ClosetItem {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  imageUrl    String
+  category    String?
+  articleType String?
+  color       String?
+  pattern     String?
+  fabric      String?
+  sleeve      String?
+  neckline    String?
+  fit         String?
+  length      String?
+  details     Json?
+  confidence  Float?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model SavedOutfit {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  data      Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model RefreshToken {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  tokenId    String   @unique
+  tokenHash  String   @unique
+  expiresAt  DateTime
+  revokedAt  DateTime?
+
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+}
+
+model EmailVerification {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  otpHash    String
+  expiresAt  DateTime
+  attempts   Int      @default(0)
+
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+}
