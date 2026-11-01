@@ -22,3 +22,5 @@ backend/uploads/*
 *.backup-*
 backend/ai/recommendation_engine copy.py
 backend/src/services/stylist.service.js.backup-*
+# Local project archive
+stylebuddy-frontend.zip

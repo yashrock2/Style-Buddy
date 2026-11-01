@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -8,3084 +8,1223 @@ import {
   MessageCircle,
   ShoppingBag,
   ScanFace,
-  Heart,
   SlidersHorizontal,
   Check,
-  Search,
-  WandSparkles,
+  ArrowUpRight,
+  Layers3,
+  Heart,
+  LayoutGrid,
+  Plus,
 } from "lucide-react";
+import StylistCharacter from "../components/StylistCharacterTemp.jsx";
 
 const features = [
-  [
-    "AI Clothing Scanner",
-    "Turn everyday clothing photos into structured digital wardrobe items.",
-    ScanFace,
-  ],
-  [
-    "Digital Closet",
-    "Search, filter and understand everything you already own.",
-    Shirt,
-  ],
-  [
-    "AI Personal Stylist",
-    "Have a natural conversation with a stylist that knows your closet.",
-    MessageCircle,
-  ],
-  [
-    "Weather-Aware Styling",
-    "Bring temperature and conditions into every recommendation.",
-    CloudSun,
-  ],
-  [
-    "Personalization",
-    "Style around your preferences, colors, fit and occasions.",
-    SlidersHorizontal,
-  ],
-  [
-    "Shopping Assistant",
-    "Complete the look only when your wardrobe needs something.",
-    ShoppingBag,
-  ],
+  {
+    number: "01",
+    title: "Scan your wardrobe",
+    description: "Turn clothing photos into organised, searchable wardrobe pieces.",
+    detail: "AI CLOTHING SCANNER",
+    Icon: ScanFace,
+  },
+  {
+    number: "02",
+    title: "Know what you own",
+    description: "Keep every outfit, category and favourite piece in one digital closet.",
+    detail: "YOUR DIGITAL CLOSET",
+    Icon: Shirt,
+  },
+  {
+    number: "03",
+    title: "Meet your personal stylist",
+    description: "Ask what to wear and get suggestions that start with your wardrobe.",
+    detail: "CONVERSATIONAL AI",
+    Icon: MessageCircle,
+  },
+  {
+    number: "04",
+    title: "Dress for the day",
+    description: "Bring weather, occasion and your personal style into each look.",
+    detail: "WEATHER-AWARE OUTFITS",
+    Icon: CloudSun,
+  },
+  {
+    number: "05",
+    title: "Make it your own",
+    description: "Recommendations adapt to your preferred colours, fits and aesthetics.",
+    detail: "PERSONAL STYLE PROFILE",
+    Icon: SlidersHorizontal,
+  },
+  {
+    number: "06",
+    title: "Shop with intention",
+    description: "Discover the missing piece only when your closet needs one.",
+    detail: "CONSIDERED SHOPPING",
+    Icon: ShoppingBag,
+  },
 ];
 
-const heroLooks = [
+const looks = [
   {
     occasion: "COLLEGE DAY",
     request: "What should I wear to college?",
-    style: "Casual",
-    temperature: "28°C",
+    style: "Everyday casual",
+    temperature: "28°",
     match: "94%",
-    items: [
-      {
-        name: "Blue T-shirt",
-        image:
-          "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=500&q=85",
-      },
-      {
-        name: "Black Jeans",
-        image:
-          "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=500&q=85",
-      },
-      {
-        name: "White Sneakers",
-        image:
-          "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=85",
-      },
-    ],
+    items: ["Relaxed tee", "Straight denim", "Everyday sneakers"],
+    colors: ["#d8d4c9", "#343a43", "#e8e5dd"],
   },
   {
-    occasion: "WEEKEND",
+    occasion: "WEEKEND PLANS",
     request: "Give me something relaxed.",
-    style: "Relaxed",
-    temperature: "30°C",
+    style: "Quiet comfort",
+    temperature: "30°",
     match: "91%",
-    items: [
-      {
-        name: "White Shirt",
-        image:
-          "https://images.unsplash.com/photo-1603252110481-7ba873bf42ab?auto=format&fit=crop&w=500&q=85",
-      },
-      {
-        name: "Beige Trousers",
-        image:
-          "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=500&q=85",
-      },
-      {
-        name: "Casual Sneakers",
-        image:
-          "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=500&q=85",
-      },
-    ],
+    items: ["Linen shirt", "Easy trousers", "Minimal sneakers"],
+    colors: ["#e8dfce", "#b8aa96", "#dedbd2"],
   },
   {
-    occasion: "DATE NIGHT",
-    request: "Create a smart casual look.",
-    style: "Smart Casual",
-    temperature: "27°C",
+    occasion: "DINNER PLANS",
+    request: "Make it smart, not too formal.",
+    style: "Smart casual",
+    temperature: "27°",
     match: "96%",
-    items: [
-      {
-        name: "Black Shirt",
-        image:
-          "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=500&q=85",
-      },
-      {
-        name: "Dark Trousers",
-        image:
-          "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=500&q=85",
-      },
-      {
-        name: "Loafers",
-        image:
-          "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=500&q=85",
-      },
-    ],
+    items: ["Dark shirt", "Tailored trousers", "Leather loafers"],
+    colors: ["#292a2b", "#5a5149", "#3c332d"],
   },
+];
+
+const steps = [
+  ["01", "Add what you own", "Upload clothing photos and let StyleBuddy organise the details."],
+  ["02", "Build your closet", "Create a searchable wardrobe that reflects your real clothes."],
+  ["03", "Tell us the plan", "Share the occasion, weather or mood you are dressing for."],
+  ["04", "Get your look", "Receive a personalised outfit built around your own pieces."],
+];
+
+const ticker = [
+  "Your wardrobe",
+  "Smarter outfits",
+  "Personal style",
+  "Weather-aware looks",
+  "Mindful shopping",
+  "Dress with intent",
+];
+
+const categories = [
+  "Shirts",
+  "T-shirts",
+  "Shorts",
+  "Trousers",
+  "Kurtas",
+  "Jackets",
+  "Footwear",
+  "Accessories",
+];
+
+const faqs = [
+  [
+    "Do I need to upload my whole wardrobe first?",
+    "No. Start with a few pieces and add more whenever you like. Suggestions get better as your closet grows.",
+  ],
+  [
+    "Will StyleBuddy only push me to buy new clothes?",
+    "No. Outfits are built from what you already own first. Shopping suggestions appear only when your closet is missing something.",
+  ],
+  [
+    "How does it know what to suggest for the day?",
+    "You share the occasion or mood, and StyleBuddy factors in the weather and your style profile.",
+  ],
+  [
+    "Can I save looks I love?",
+    "Yes. Save outfits to come back to them any time from your saved outfits.",
+  ],
 ];
 
 export default function Landing() {
   const [lookIndex, setLookIndex] = useState(0);
   const [isBuilding, setIsBuilding] = useState(true);
-  const [howProgress, setHowProgress] = useState(0);
-  const [howDistance, setHowDistance] = useState(0);
-  const howSectionRef = useRef(null);
-  const howTrackRef = useRef(null);
-  const howViewportRef = useRef(null);
+  const [activeStep, setActiveStep] = useState(0);
+  const currentLook = looks[lookIndex];
 
-  const currentLook = heroLooks[lookIndex];
-
+  // Scroll reveal animations
   useEffect(() => {
-    const buildingTimer = setTimeout(() => {
-      setIsBuilding(false);
-    }, 2300);
+    const revealNodes = document.querySelectorAll(".sb-reveal");
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
-    const changeLookTimer = setTimeout(() => {
-      setIsBuilding(true);
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      revealNodes.forEach((node) => node.classList.add("is-visible"));
+      return;
+    }
 
-      setLookIndex((current) => {
-        return (current + 1) % heroLooks.length;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.14,
+        rootMargin: "0px 0px -45px 0px",
+      }
+    );
+
+    revealNodes.forEach((node) => observer.observe(node));
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Scroll-controlled 3D process carousel
+  useEffect(() => {
+    const section = document.querySelector(".sb-process");
+    if (!section) return;
+
+    let frame = 0;
+
+    const updateCarousel = () => {
+      cancelAnimationFrame(frame);
+
+      frame = requestAnimationFrame(() => {
+        const rect = section.getBoundingClientRect();
+        const scrollDistance = section.offsetHeight - window.innerHeight;
+
+        if (scrollDistance <= 0) return;
+
+        const progress = Math.max(
+          0,
+          Math.min(0.999, -rect.top / scrollDistance)
+        );
+
+        setActiveStep(
+          Math.min(
+            steps.length - 1,
+            Math.floor(progress * steps.length)
+          )
+        );
       });
-    }, 6000);
+    };
+
+    window.addEventListener("scroll", updateCarousel, { passive: true });
+    window.addEventListener("resize", updateCarousel);
+    updateCarousel();
 
     return () => {
-      clearTimeout(buildingTimer);
-      clearTimeout(changeLookTimer);
+      window.removeEventListener("scroll", updateCarousel);
+      window.removeEventListener("resize", updateCarousel);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  // Existing rotating outfit preview
+  useEffect(() => {
+    const buildTimer = window.setTimeout(
+      () => setIsBuilding(false),
+      1500
+    );
+
+    const nextTimer = window.setTimeout(() => {
+      setIsBuilding(true);
+      setLookIndex((current) => (current + 1) % looks.length);
+    }, 5500);
+
+    return () => {
+      window.clearTimeout(buildTimer);
+      window.clearTimeout(nextTimer);
     };
   }, [lookIndex]);
 
-useEffect(() => {
-  const section = howSectionRef.current;
-  const track = howTrackRef.current;
-  const viewport = howViewportRef.current;
-
-  if (!section || !track || !viewport) return;
-
-  let isVisible = false;
-  let timer = null;
-  let resumeTimer = null;
-  let isUserScrolling = false;
-
-  const clamp = (value, min = 0, max = 1) =>
-    Math.min(Math.max(value, min), max);
-
-  const updateTrackDistance = () => {
-    setHowDistance(Math.max(track.scrollWidth - viewport.clientWidth, 0));
-  };
-
-  const updateManualProgress = () => {
-    if (!isVisible || window.innerWidth <= 850 || isUserScrolling === false) {
-      return;
-    }
-
-    const rect = section.getBoundingClientRect();
-    const scrollableDistance = Math.max(
-      section.offsetHeight - window.innerHeight,
-      1
-    );
-
-    const progress = clamp(-rect.top / scrollableDistance);
-    setHowProgress(progress);
-  };
-
-  const startAutoPlay = () => {
-    if (timer || !isVisible || isUserScrolling) return;
-
-    timer = window.setInterval(() => {
-      setHowProgress((current) => {
-        const next = current + 0.2;
-        return next >= 1 ? 0 : Number(next.toFixed(2));
-      });
-    }, 2600);
-  };
-
-  const stopAutoPlay = () => {
-    if (timer) {
-      window.clearInterval(timer);
-      timer = null;
-    }
-  };
-
-  const resumeAutoPlay = () => {
-    if (resumeTimer) {
-      window.clearTimeout(resumeTimer);
-    }
-
-    resumeTimer = window.setTimeout(() => {
-      isUserScrolling = false;
-      startAutoPlay();
-    }, 3500);
-  };
-
-  const handleScroll = () => {
-    if (!isVisible || window.innerWidth <= 850) return;
-
-    isUserScrolling = true;
-    stopAutoPlay();
-    updateManualProgress();
-    resumeAutoPlay();
-  };
-
-  const handleResize = () => {
-    updateTrackDistance();
-
-    if (window.innerWidth <= 850) {
-      stopAutoPlay();
-      return;
-    }
-
-    updateManualProgress();
-    if (isVisible && !isUserScrolling) {
-      startAutoPlay();
-    }
-  };
-
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      isVisible = entry.isIntersecting && window.innerWidth > 850;
-
-      if (isVisible) {
-        isUserScrolling = false;
-        updateTrackDistance();
-        startAutoPlay();
-      } else {
-        stopAutoPlay();
-        if (resumeTimer) {
-          window.clearTimeout(resumeTimer);
-          resumeTimer = null;
-        }
-      }
-    },
-    {
-      threshold: 0.2,
-    }
-  );
-
-  window.addEventListener("scroll", handleScroll, { passive: true });
-  window.addEventListener("resize", handleResize);
-  updateTrackDistance();
-  observer.observe(section);
-
-  return () => {
-    stopAutoPlay();
-    if (resumeTimer) {
-      window.clearTimeout(resumeTimer);
-    }
-    window.removeEventListener("scroll", handleScroll);
-    window.removeEventListener("resize", handleResize);
-    observer.disconnect();
-  };
-}, []);
   return (
-    <div className="landing">
-      {/* =====================================================
-          NAVBAR
-          ===================================================== */}
+    <div className="sb-page">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
 
-      <nav className="landing-nav">
-        <div className="brand">
-          <span className="brand-mark">
+        .sb-page {
+          --ink: #151513;
+          --ink-2: #23211c;
+          --paper: #f7f5f0;
+          --cream: #ece8df;
+          --sand: #ddd6c8;
+          --taupe: #8d806c;
+          --sage: #839174;
+          --muted: #77756e;
+          --line: rgba(35,33,28,.12);
+          color: var(--ink);
+          background: var(--paper);
+          font-family: "DM Sans", sans-serif;
+          overflow-x: clip;
+          -webkit-text-size-adjust: 100%;
+        }
+        .sb-page * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        .sb-page h1,.sb-page h2,.sb-page h3 { font-family: "DM Sans", sans-serif; font-weight: 700; }
+        .sb-page em { font-family: "Playfair Display", serif; font-weight: 500; letter-spacing: -.03em; }
+        /* Keep the 3D character responsive on small screens */
+.sb-character-wrap,
+.sb-character-canvas {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.sb-character-canvas canvas {
+  display: block;
+  max-width: 100%;
+}
+
+        /* NAV */
+        .sb-nav {
+          position: absolute; top: 0; left: 0; right: 0; z-index: 30;
+          height: 86px; padding: 0 clamp(22px,5vw,72px);
+          display: flex; align-items: center; justify-content: space-between;
+        }
+        .sb-brand { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; letter-spacing: -.05em; color: var(--ink); text-decoration: none; }
+        .sb-brand-mark { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: var(--ink); }
+        .sb-nav-links { display: flex; gap: 4px; padding: 5px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.6); backdrop-filter: blur(12px); }
+        .sb-nav-links a { padding: 9px 18px; border-radius: 999px; color: #5f5d56; font-size: 13px; text-decoration: none; transition: background .25s, color .25s; }
+        .sb-nav-links a:hover { background: var(--ink); color: #fff; }
+        .sb-nav-actions { display: flex; align-items: center; gap: 20px; }
+        .sb-signin { color: #5f5d56; font-size: 13px; text-decoration: none; transition: color .2s; }
+        .sb-signin:hover { color: var(--ink); }
+
+        .sb-nav-cta,.sb-button-dark,.sb-button-light {
+          min-height: 52px; padding: 0 26px;
+          display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+          border-radius: 14px; text-decoration: none; font-size: 14px; font-weight: 600;
+          transition: transform .3s, box-shadow .3s, background .3s;
+        }
+        .sb-nav-cta { min-height: 44px; padding: 0 20px; font-size: 13px; }
+        .sb-nav-cta,.sb-button-dark { color: #fff; background: var(--ink); }
+        .sb-button-light { color: var(--ink); background: #fff; border: 1px solid var(--line); }
+        .sb-nav-cta:hover,.sb-button-dark:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(21,21,19,.25); }
+        .sb-button-light:hover { transform: translateY(-3px); background: var(--cream); }
+        .sb-button-dark svg,.sb-button-light svg,.sb-nav-cta svg { transition: transform .3s; }
+        .sb-button-dark:hover svg,.sb-button-light:hover svg,.sb-nav-cta:hover svg { transform: translateX(4px); }
+
+        /* HERO */
+        .sb-hero {
+          min-height: 100vh; min-height: 100svh; position: relative; isolation: isolate; overflow: hidden;
+          display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.05fr); align-items: center;
+          padding: 110px clamp(22px,5vw,72px) 56px;
+          background: radial-gradient(ellipse at 74% 46%, #e6e1d6 0%, transparent 48%), linear-gradient(115deg, #fbfaf7, #f4f1ea 55%, #ece8df);
+        }
+        .sb-hero:before {
+          content: ""; position: absolute; inset: 0; z-index: -1; opacity: .3; pointer-events: none;
+          background-image: radial-gradient(#8e887b .65px, transparent .65px); background-size: 20px 20px;
+          mask-image: linear-gradient(90deg, transparent, black 70%, transparent);
+        }
+        .sb-hero-copy { position: relative; z-index: 6; max-width: 620px; }
+        .sb-kicker { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 26px; padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: #5f5d56; font-size: 12px; font-weight: 500; }
+        .sb-kicker-line { width: 8px; height: 8px; border-radius: 50%; background: var(--sage); animation: sbPulse 2s infinite; }
+        .sb-hero h1 { margin: 0; font-size: clamp(54px,6.8vw,100px); line-height: .94; letter-spacing: -.07em; animation: sbRise 1s cubic-bezier(.2,.7,.2,1) both; }
+        .sb-hero h1 em { color: var(--taupe); }
+        .sb-hero-lede { max-width: 470px; margin: 26px 0 0; color: var(--muted); font-size: 16px; line-height: 1.75; animation: sbRise 1s .15s cubic-bezier(.2,.7,.2,1) both; }
+        .sb-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; animation: sbRise 1s .3s cubic-bezier(.2,.7,.2,1) both; }
+        .sb-proof { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 28px; color: #7c786d; font-size: 13px; animation: sbRise 1s .45s both; }
+        .sb-proof span { display: flex; align-items: center; gap: 7px; }
+        .sb-proof svg { color: var(--sage); }
+        .sb-hero-note { display: flex; align-items: center; gap: 10px; margin-top: 40px; color: #8c877d; font-size: 13px; animation: sbRise 1s .6s both; }
+        .sb-hero-note:before { content: ""; width: 38px; height: 1px; background: #c5beb1; }
+
+        /* STAGE: character on a soft glow */
+        .sb-stage {
+          --sb-char-x: clamp(-160px, -8vw, 0px);
+          --sb-shift: calc(var(--sb-char-x) + clamp(0px, 7vw, 140px));
+          position: relative; height: min(88vh,860px); min-height: 650px;
+          display: flex; align-items: center; justify-content: center;
+        }
+        .sb-stage:before {
+          content: "STYLE"; position: absolute; left: 50%; top: 46%;
+          translate: var(--sb-shift) 0;
+          transform: translate(-50%,-50%); white-space: nowrap;
+          font: 700 clamp(120px,18vw,280px) "DM Sans", sans-serif; letter-spacing: -.08em;
+          color: transparent; -webkit-text-stroke: 1px rgba(35,33,28,.1);
+          animation: sbTextFloat 9s ease-in-out infinite;
+        }
+        .sb-stage-halo {
+          position: absolute; width: min(48vw,640px); aspect-ratio: 1; border-radius: 50%;
+          translate: var(--sb-shift) 0;
+          background: radial-gradient(circle, rgba(255,255,255,.95), rgba(221,214,200,.55) 50%, transparent 72%);
+          animation: sbBreathe 6s ease-in-out infinite;
+        }
+        .sb-stage-ring {
+          position: absolute; width: min(44vw,580px); aspect-ratio: 1; border-radius: 50%;
+          translate: var(--sb-shift) 0;
+          border: 1px dashed rgba(91,82,67,.35);
+          animation: sbSpin 40s linear infinite;
+        }
+        .sb-stage-ring:after { content: ""; position: absolute; top: -6px; left: 50%; width: 12px; height: 12px; border-radius: 50%; background: var(--ink); }
+        .sb-stage-floor {
+          position: absolute; bottom: 3%; width: min(26vw,340px); height: 34px; border-radius: 50%;
+          translate: var(--sb-shift) 0;
+          background: radial-gradient(ellipse, rgba(35,33,28,.28), transparent 70%);
+          filter: blur(6px);
+        }
+        .sb-character-wrap {
+          position: absolute; inset: 0; z-index: 3;
+          display: flex; justify-content: center; align-items: center; pointer-events: none;
+          translate: var(--sb-char-x) 0;
+          transform: scale(1.1); transform-origin: 50% 100%;
+          filter: drop-shadow(0 30px 40px rgba(21,21,19,.22));
+        }
+        .sb-character-wrap .sb-character-canvas { width: 100%; height: 100%; min-height: 640px; }
+        .sb-stage-index { position: absolute; right: 0; top: 14%; z-index: 4; color: #a19a8d; font-size: 10px; letter-spacing: .2em; writing-mode: vertical-rl; }
+
+        .sb-float-card { position: absolute; z-index: 5; display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 1px solid rgba(255,255,255,.9); border-radius: 16px; background: rgba(255,255,255,.82); box-shadow: 0 18px 50px rgba(48,42,32,.12); backdrop-filter: blur(14px); }
+        .sb-float-icon { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 11px; color: #fff; background: var(--ink); }
+        .sb-float-card small { display: block; margin-bottom: 3px; color: #a09a8e; font-size: 9px; letter-spacing: .12em; }
+        .sb-float-card strong { display: block; color: var(--ink); font-size: 13px; font-weight: 600; }
+        .sb-float-weather { top: 13%; left: 0; animation: sbFloat 5s ease-in-out infinite; }
+        .sb-float-style { right: 0; bottom: 30%; animation: sbFloat 6s .7s ease-in-out infinite; }
+        .sb-style-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--sage); box-shadow: 0 0 0 5px rgba(131,145,116,.2); }
+
+        .sb-look-panel { position: absolute; z-index: 6; left: 0; bottom: 3%; width: min(340px,78%); padding: 18px; border: 1px solid rgba(255,255,255,.9); border-radius: 20px; background: rgba(255,255,255,.9); backdrop-filter: blur(18px); box-shadow: 0 26px 70px rgba(48,42,32,.16); animation: sbFloat 7s .3s ease-in-out infinite; }
+        .sb-look-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .sb-look-label { color: #9b9589; font-size: 9px; font-weight: 700; letter-spacing: .14em; }
+        .sb-look-live { display: flex; align-items: center; gap: 6px; color: #7d8a6e; font-size: 9px; letter-spacing: .1em; }
+        .sb-look-live i { width: 6px; height: 6px; border-radius: 50%; background: var(--sage); animation: sbPulse 1.6s infinite; }
+        .sb-look-question { margin: 14px 0 13px; color: var(--ink); font: 500 19px "Playfair Display", serif; }
+        .sb-look-items { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; transition: opacity .4s; }
+        .sb-look-item { min-width: 0; }
+        .sb-look-swatch { height: 52px; border-radius: 11px; border: 1px solid rgba(0,0,0,.06); transition: background .35s, transform .35s; }
+        .sb-look-item:hover .sb-look-swatch { transform: translateY(-3px); }
+        .sb-look-item span { display: block; margin-top: 7px; overflow: hidden; color: #77736b; font-size: 10px; white-space: nowrap; text-overflow: ellipsis; }
+        .sb-look-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); color: #8a857b; font-size: 10px; }
+        .sb-look-score { color: var(--ink); font: italic 500 22px "Playfair Display", serif; }
+        .sb-look-loading { opacity: .4; }
+
+        /* TICKER */
+        .sb-marquee { padding: 20px 0; overflow: hidden; background: var(--ink); }
+        .sb-marquee-track { display: flex; width: max-content; animation: sbTicker 30s linear infinite; }
+        .sb-marquee-track span { display: flex; align-items: center; gap: 36px; padding-right: 36px; color: var(--cream); font: italic 500 22px "Playfair Display", serif; white-space: nowrap; }
+        .sb-marquee-track span:after { content: "✳"; color: var(--taupe); font: 14px "DM Sans", sans-serif; }
+        .sb-marquee:hover .sb-marquee-track { animation-play-state: paused; }
+
+        /* SECTIONS */
+        .sb-section { padding: 115px clamp(22px,5vw,72px); }
+        .sb-section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; max-width: 1300px; margin: 0 auto 52px; }
+        .sb-section-kicker { margin-bottom: 16px; color: var(--taupe); font-size: 13px; font-weight: 600; }
+        .sb-section h2 { max-width: 700px; margin: 0; font-size: clamp(36px,4.8vw,64px); line-height: 1; letter-spacing: -.06em; }
+        .sb-section h2 em { color: var(--taupe); }
+        .sb-section-intro { max-width: 360px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.75; }
+
+        /* CLOSET CATEGORIES */
+        .sb-cats { padding: 70px clamp(22px,5vw,72px) 0; max-width: 1444px; margin: 0 auto; }
+        .sb-cats-title { margin: 0 0 22px; color: var(--muted); font-size: 14px; }
+        .sb-cat-row { display: flex; flex-wrap: wrap; gap: 10px; }
+        .sb-cat { padding: 12px 22px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: #4a483f; font-size: 14px; font-weight: 500; transition: transform .3s, background .3s, color .3s; cursor: default; }
+        .sb-cat:hover { transform: translateY(-4px) rotate(-1.5deg); background: var(--ink); color: #fff; }
+
+        /* FEATURE GRID */
+        .sb-feature-grid { display: grid; grid-template-columns: repeat(12,1fr); gap: 16px; max-width: 1300px; margin: 0 auto; }
+        .sb-feature-card:nth-child(1) { grid-column: span 7; }
+        .sb-feature-card:nth-child(2) { grid-column: span 5; }
+        .sb-feature-card:nth-child(3) { grid-column: span 5; }
+        .sb-feature-card:nth-child(4) { grid-column: span 7; }
+        .sb-feature-card:nth-child(5) { grid-column: span 6; }
+        .sb-feature-card:nth-child(6) { grid-column: span 6; }
+        .sb-feature-card { position: relative; min-height: 290px; padding: 28px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; border: 1px solid var(--line); border-radius: 26px; background: #fff; transition: transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s, background .45s, color .45s; }
+        .sb-feature-card:before { content: ""; position: absolute; width: 300px; height: 300px; right: -90px; top: -120px; border-radius: 50%; background: radial-gradient(circle, var(--cream), transparent 70%); transition: transform .6s; }
+        .sb-feature-card:hover { transform: translateY(-8px) rotate(-.5deg); background: var(--ink); color: #fff; box-shadow: 0 30px 70px rgba(21,21,19,.25); }
+        .sb-feature-card:hover:before { transform: scale(1.7) translate(-30px,30px); background: radial-gradient(circle, rgba(141,128,108,.4), transparent 70%); }
+        .sb-feature-meta { position: absolute; top: 26px; left: 28px; right: 28px; display: flex; justify-content: space-between; color: #aaa396; font-size: 12px; }
+        .sb-feature-icon { position: absolute; top: 56px; left: 28px; width: 54px; height: 54px; display: grid; place-items: center; border-radius: 16px; color: var(--ink); background: var(--cream); transition: transform .45s, background .45s; }
+        .sb-feature-card:hover .sb-feature-icon { transform: rotate(-10deg) scale(1.12); background: #fff; }
+        .sb-feature-card h3 { position: relative; margin: 0 0 9px; font-size: 25px; letter-spacing: -.04em; }
+        .sb-feature-card p { position: relative; max-width: 340px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; transition: color .45s; }
+        .sb-feature-card:hover p { color: #cfcabd; }
+        .sb-feature-watermark { position: absolute; right: 22px; bottom: 16px; color: #f1efe9; transform: rotate(-12deg); transition: transform .6s, color .6s; }
+        .sb-feature-card:hover .sb-feature-watermark { transform: rotate(8deg) scale(1.2); color: rgba(255,255,255,.07); }
+
+        /* DASHBOARD PREVIEW */
+        .sb-preview-wrap { max-width: 1300px; margin: 0 auto; perspective: 1600px; }
+        .sb-preview { display: grid; grid-template-columns: 210px 1fr; min-height: 430px; overflow: hidden; border: 1px solid var(--line); border-radius: 26px; background: var(--paper); box-shadow: 0 50px 100px rgba(48,42,32,.18); transform: rotateX(4deg); transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+        .sb-preview:hover { transform: rotateX(0deg) translateY(-6px); }
+        .sb-pv-side { padding: 22px 14px; border-right: 1px solid var(--line); background: #fbfaf7; }
+        .sb-pv-brand { display: flex; align-items: center; gap: 9px; margin: 0 8px 24px; font-weight: 700; letter-spacing: -.04em; }
+        .sb-pv-brand span { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: var(--ink); }
+        .sb-pv-item { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; padding: 11px 12px; border-radius: 12px; color: #77756e; font-size: 13px; }
+        .sb-pv-item.on { color: #fff; background: var(--ink); }
+        .sb-pv-main { padding: 26px; }
+        .sb-pv-main h4 { margin: 0 0 4px; font-size: 28px; letter-spacing: -.05em; }
+        .sb-pv-main > p { margin: 0 0 20px; color: var(--muted); font-size: 13px; }
+        .sb-pv-hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; padding: 22px; border-radius: 20px; background: var(--cream); }
+        .sb-pv-hero strong { display: block; margin-bottom: 10px; font-size: 24px; line-height: 1.05; letter-spacing: -.05em; }
+        .sb-pv-hero strong em { color: var(--taupe); }
+        .sb-pv-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 10px 16px; border-radius: 10px; color: #fff; background: var(--ink); font-size: 12px; font-weight: 600; }
+        .sb-pv-tiles { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+        .sb-pv-tile { aspect-ratio: .8; border-radius: 12px; background: #fff; border: 1px solid var(--line); display: grid; place-items: center; color: var(--taupe); animation: sbFloat 5s ease-in-out infinite; }
+        .sb-pv-tile:nth-child(2) { animation-delay: -1.4s; } .sb-pv-tile:nth-child(3) { animation-delay: -2.8s; }
+        .sb-pv-tile:nth-child(4) { animation-delay: -.7s; } .sb-pv-tile:nth-child(5) { animation-delay: -2.1s; } .sb-pv-tile:nth-child(6) { animation-delay: -3.5s; }
+
+        /* 3D HOW IT WORKS (light, matches the rest of the page) */
+        .sb-process {
+          height: 350vh; padding: 0; position: relative; color: var(--ink);
+          background: linear-gradient(180deg, var(--paper) 0%, var(--cream) 18%, var(--cream) 82%, var(--paper) 100%);
+        }
+        .sb-process:before {
+          content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .35;
+          background-image: radial-gradient(#8e887b .65px, transparent .65px); background-size: 22px 22px;
+          mask-image: radial-gradient(ellipse at 50% 40%, black 10%, transparent 70%);
+        }
+        .sb-process-inner { position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 650px; margin: 0; padding: 65px clamp(22px,7vw,130px); overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+        .sb-process .sb-section-kicker { color: var(--taupe); }
+        .sb-process .sb-section-head { max-width: none; margin: 0 0 22px; }
+        .sb-process .sb-section-head h2 { color: var(--ink); }
+        .sb-process .sb-section-head h2 em { color: var(--taupe); }
+        .sb-process .sb-section-intro { color: var(--muted); }
+        .sb-carousel-stage { height: 440px; position: relative; perspective: 1300px; display: flex; align-items: center; justify-content: center; transform-style: preserve-3d; }
+        .sb-step-card {
+          position: absolute; width: min(540px,65vw); height: 365px; padding: 27px;
+          border: 1px solid var(--line); border-radius: 26px;
+          background: linear-gradient(145deg, #ffffff, #f6f3ec);
+          display: flex; flex-direction: column; justify-content: space-between;
+          transform-style: preserve-3d; overflow: hidden; will-change: transform, opacity;
+          box-shadow: 0 18px 50px rgba(48,42,32,.08);
+          transition: transform .85s cubic-bezier(.2,.75,.2,1), opacity .85s ease, filter .85s ease, box-shadow .85s ease;
+        }
+        .sb-step-card::before { content: ""; position: absolute; width: 350px; height: 350px; border-radius: 50%; top: -150px; right: -100px; pointer-events: none; background: radial-gradient(circle, rgba(141,128,108,.2), transparent 70%); }
+        .sb-step-card.active { border-color: rgba(21,21,19,.4); box-shadow: 0 34px 80px rgba(48,42,32,.22); }
+        .sb-step-card.side { filter: saturate(.7); opacity: .75; }
+        .sb-step-top { display: flex; justify-content: space-between; align-items: center; color: #9b9589; font-size: 11px; letter-spacing: .12em; }
+        .sb-step-visual { position: relative; display: grid; place-items: center; height: 175px; margin: 13px 0; border-radius: 18px; background: linear-gradient(135deg, #f1ede4, #e2ddd0); overflow: hidden; }
+        .sb-step-visual::before,.sb-step-visual::after { content: ""; position: absolute; width: 180px; height: 180px; border: 1px solid rgba(35,33,28,.18); border-radius: 50%; animation: sbPing 3s ease-out infinite; }
+        .sb-step-visual::after { width: 230px; height: 230px; animation-delay: 1.2s; }
+        .sb-step-visual-icon { z-index: 1; width: 84px; height: 84px; display: grid; place-items: center; border-radius: 50%; color: var(--cream); background: var(--ink); box-shadow: 0 14px 30px rgba(21,21,19,.25); }
+        .sb-step-bottom h3 { margin: 0 0 8px; color: var(--ink); font-size: 27px; letter-spacing: -.05em; }
+        .sb-step-bottom p { max-width: 400px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+        .sb-process-progress { position: absolute; left: clamp(22px,7vw,130px); right: clamp(22px,7vw,130px); bottom: 30px; height: 3px; border-radius: 3px; background: var(--sand); }
+        .sb-process-progress-fill { height: 100%; border-radius: 3px; background: var(--ink); transition: width .5s ease; }
+        .sb-process-counter { position: absolute; right: clamp(22px,7vw,130px); bottom: 42px; color: var(--taupe); font: 600 13px "DM Sans", sans-serif; letter-spacing: .12em; }
+
+        /* PERSONAL */
+        .sb-personal { display: grid; grid-template-columns: 1fr 1fr; gap: 8%; align-items: center; max-width: 1300px; margin: 0 auto; }
+        .sb-personal-art { min-height: 460px; position: relative; display: grid; place-items: center; border-radius: 32px; overflow: hidden; background: radial-gradient(circle at 50% 45%, #2e2b25, #151513 72%); }
+        .sb-personal-art:before,.sb-personal-art:after { content: ""; position: absolute; width: 280px; aspect-ratio: 1; border: 1px dashed rgba(255,255,255,.22); border-radius: 50%; animation: sbSpin 18s linear infinite; }
+        .sb-personal-art:after { width: 380px; animation-duration: 26s; animation-direction: reverse; }
+        .sb-personal-monogram { position: relative; z-index: 1; color: rgba(236,232,223,.16); font: italic 500 230px/1 "Playfair Display", serif; animation: sbMonogram 7s ease-in-out infinite; }
+        .sb-personal-tag { position: absolute; z-index: 2; padding: 11px 16px; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; background: rgba(255,255,255,.1); color: #f1ede3; font-size: 12px; backdrop-filter: blur(10px); animation: sbTagFloat 5.5s ease-in-out infinite; }
+        .sb-personal-tag.one { top: 19%; left: 8%; }
+        .sb-personal-tag.two { right: 8%; top: 38%; animation-delay: -1.8s; }
+        .sb-personal-tag.three { left: 14%; bottom: 14%; animation-delay: -3.4s; }
+        .sb-personal-copy h2 { margin: 0; font-size: clamp(36px,4.4vw,58px); line-height: 1.02; letter-spacing: -.06em; }
+        .sb-personal-copy h2 em { color: var(--taupe); }
+        .sb-personal-copy p { max-width: 460px; margin: 22px 0 0; color: var(--muted); font-size: 15px; line-height: 1.8; }
+        .sb-personal-points { display: grid; gap: 14px; margin: 26px 0 32px; color: #4a483f; font-size: 14px; }
+        .sb-personal-points span { display: flex; align-items: center; gap: 11px; }
+        .sb-personal-points svg { flex: none; padding: 4px; width: 24px; height: 24px; border-radius: 50%; color: #fff; background: var(--sage); }
+
+        /* FAQ */
+        .sb-faq { max-width: 860px; margin: 0 auto; display: grid; gap: 12px; }
+        .sb-faq details { border: 1px solid var(--line); border-radius: 20px; background: #fff; transition: background .3s, box-shadow .3s; }
+        .sb-faq details[open] { background: var(--cream); box-shadow: 0 18px 40px rgba(48,42,32,.08); }
+        .sb-faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 26px; list-style: none; cursor: pointer; font-size: 17px; font-weight: 600; letter-spacing: -.02em; }
+        .sb-faq summary::-webkit-details-marker { display: none; }
+        .sb-faq summary svg { flex: none; padding: 5px; width: 28px; height: 28px; border-radius: 50%; color: #fff; background: var(--ink); transition: transform .4s; }
+        .sb-faq details[open] summary svg { transform: rotate(135deg); }
+        .sb-faq details p { margin: 0; padding: 0 26px 24px; max-width: 640px; color: var(--muted); font-size: 15px; line-height: 1.75; animation: sbRise .5s both; }
+
+        /* CTA + FOOTER */
+        .sb-cta { position: relative; padding: 120px 24px; overflow: hidden; text-align: center; color: #f8f6f0; background: #1b1a17; }
+        .sb-cta:before { content: ""; position: absolute; width: 620px; height: 620px; left: 50%; top: -420px; transform: translateX(-50%); border: 1px solid rgba(255,255,255,.12); border-radius: 50%; box-shadow: 0 0 0 60px rgba(255,255,255,.025), 0 0 0 120px rgba(255,255,255,.018); animation: sbBreathe2 7s ease-in-out infinite; }
+        .sb-cta-content { position: relative; max-width: 720px; margin: 0 auto; }
+        .sb-cta-kicker { color: #b8ad99; font-size: 13px; font-weight: 600; }
+        .sb-cta h2 { margin: 18px 0 16px; font-size: clamp(40px,6vw,78px); line-height: .98; letter-spacing: -.065em; }
+        .sb-cta p { margin: 0 auto 32px; max-width: 440px; color: #b5b1a7; font-size: 16px; line-height: 1.7; }
+        .sb-cta .sb-button-light { min-height: 56px; padding: 0 32px; font-size: 15px; border: 0; }
+        .sb-footer { min-height: 90px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px clamp(22px,5vw,72px); color: #89847a; background: #12110f; font-size: 12px; }
+        .sb-footer .sb-brand { color: #f6f3ec; font-size: 17px; }
+        .sb-footer .sb-brand-mark { color: var(--ink); background: #f4f0e7; }
+
+        /* KEYFRAMES */
+        @keyframes sbFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes sbRise { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: none; } }
+        @keyframes sbSpin { to { transform: rotate(360deg); } }
+        @keyframes sbPulse { 0% { box-shadow: 0 0 0 0 rgba(131,145,116,.55); } 70%,100% { box-shadow: 0 0 0 10px rgba(131,145,116,0); } }
+        @keyframes sbBreathe { 0%,100% { transform: scale(1); opacity: .9; } 50% { transform: scale(1.08); opacity: 1; } }
+        @keyframes sbBreathe2 { 0%,100% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.06); } }
+        @keyframes sbTextFloat { 0%,100% { transform: translate(-50%,-50%); } 50% { transform: translate(-50%,-54%); } }
+        @keyframes sbTicker { to { transform: translateX(-50%); } }
+        @keyframes sbPing { 0% { transform: scale(.6); opacity: .8; } 100% { transform: scale(1.3); opacity: 0; } }
+        @keyframes sbMonogram { 0%,100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-14px) rotate(3deg) scale(1.04); } }
+        @keyframes sbTagFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* SCROLL REVEALS */
+        .sb-reveal { opacity: 0; transform: translate3d(0,40px,0); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: var(--sb-delay,0ms); will-change: opacity, transform; }
+        .sb-reveal.is-visible { opacity: 1; transform: none; }
+        .sb-reveal-left { transform: translate3d(-48px,0,0); }
+        .sb-reveal-right { transform: translate3d(48px,0,0); }
+
+        /* TABLET */
+        @media(max-width:1050px) {
+          .sb-hero { grid-template-columns: 1fr; padding-top: 110px; }
+          .sb-stage { --sb-char-x: 0px; --sb-shift: 0px; height: 700px; }
+          .sb-nav-links { display: none; }
+          .sb-feature-card:nth-child(n) { grid-column: span 6; }
+          .sb-preview { grid-template-columns: 1fr; }
+          .sb-pv-side { display: none; }
+        }
+
+        /* PHONE */
+        @media(max-width:650px) {
+          /* nav */
+          .sb-nav { height: 64px; padding: 0 16px; }
+          .sb-brand { font-size: 17px; }
+          .sb-brand-mark { width: 30px; height: 30px; }
+          .sb-nav-actions { gap: 12px; }
+          .sb-signin { font-size: 12px; }
+          .sb-nav-cta { min-height: 38px; padding: 0 14px; font-size: 12px; }
+          .sb-nav-cta svg { display: none; }
+
+          /* hero: text first, then character, then outfit card */
+          .sb-hero { min-height: auto; display: flex; flex-direction: column; gap: 6px; padding: 84px 18px 28px; }
+          .sb-hero h1 { font-size: clamp(42px, 13vw, 64px); }
+          .sb-hero-lede { font-size: 15px; margin-top: 20px; }
+          .sb-hero-actions { display: grid; grid-template-columns: 1fr; margin-top: 24px; }
+          .sb-hero-actions a { width: 100%; }
+          .sb-proof { margin-top: 22px; }
+          .sb-hero-note { display: none; }
+
+          .sb-stage {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+.sb-character-wrap {
+  position: relative;
+  inset: auto;
+  flex: 0 0 480px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 480px;
+  translate: 0 0;
+  transform: none;
+  transform-origin: center bottom;
+  overflow: hidden;
+}
+
+.sb-character-wrap .sb-character-canvas {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0;
+  height: 100% !important;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.sb-character-wrap .sb-character-canvas canvas {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  transform: translateX(-55px);
+}
+          .sb-stage:before { top: 240px; font-size: 34vw; translate: 0 0; }
+          .sb-stage-halo,.sb-stage-ring { top: 240px; left: 50%; translate: -50% -50%; width: 88vw; }
+          .sb-stage-floor { top: 462px; bottom: auto; left: 50%; translate: -50% 0; width: 58vw; }
+          
+          
+          .sb-stage-index,.sb-float-weather,.sb-float-style { display: none; }
+          .sb-look-panel { position: relative; left: auto; bottom: auto; width: calc(100% - 36px); margin: 8px 18px 0; padding: 14px; animation: none; }
+          .sb-look-question { font-size: 17px; }
+
+          /* ticker, sections, headings */
+          .sb-marquee { padding: 14px 0; }
+          .sb-marquee-track span { font-size: 18px; gap: 24px; padding-right: 24px; }
+          .sb-section { padding: 72px 18px; }
+          .sb-section-head { display: block; margin-bottom: 32px; }
+          .sb-section h2 { font-size: clamp(32px, 9.5vw, 44px); }
+          .sb-section-intro { margin-top: 16px; font-size: 14px; }
+          .sb-cats { padding: 48px 18px 0; }
+          .sb-cat { padding: 10px 16px; font-size: 13px; }
+
+          /* features */
+          .sb-feature-grid { gap: 12px; }
+          .sb-feature-card:nth-child(n) { grid-column: span 12; min-height: 230px; padding: 22px; border-radius: 22px; }
+          .sb-feature-meta { top: 22px; left: 22px; right: 22px; }
+          .sb-feature-icon { top: 50px; left: 22px; width: 48px; height: 48px; }
+          .sb-feature-card h3 { font-size: 22px; }
+
+          /* dashboard preview */
+          .sb-preview { transform: none; grid-template-columns: 1fr; min-height: 0; border-radius: 22px; }
+          .sb-pv-side { display: none; }
+          .sb-pv-main { padding: 18px; }
+          .sb-pv-main h4 { font-size: 22px; }
+          .sb-pv-hero { grid-template-columns: 1fr; padding: 16px; }
+          .sb-pv-hero strong { font-size: 20px; }
+
+          /* how it works */
+          .sb-process { height: 300vh; }
+          .sb-process-inner { min-height: 570px; padding: 35px 18px 55px; }
+          .sb-process .sb-section-head { display: block; margin-bottom: 8px; }
+          .sb-process .sb-section-head h2 { font-size: clamp(30px, 9vw, 44px); }
+          .sb-process .sb-section-intro { display: none; }
+          .sb-carousel-stage { height: 370px; }
+          .sb-step-card { width: 76vw; max-width: 390px; height: 315px; padding: 19px; }
+          .sb-step-visual { height: 135px; }
+          .sb-step-visual-icon { width: 68px; height: 68px; }
+          .sb-step-bottom h3 { font-size: 21px; }
+          .sb-step-bottom p { font-size: 12px; }
+          .sb-process-progress { left: 18px; right: 18px; bottom: 23px; }
+          .sb-process-counter { right: 18px; bottom: 36px; }
+
+          /* personal, faq, cta, footer */
+          .sb-personal { grid-template-columns: 1fr; gap: 32px; }
+          .sb-personal-art { min-height: 300px; border-radius: 24px; }
+          .sb-personal-monogram { font-size: 140px; }
+          .sb-personal-tag { font-size: 11px; padding: 9px 13px; }
+          .sb-personal-copy .sb-button-dark { width: 100%; }
+          .sb-faq summary { padding: 18px; font-size: 15px; }
+          .sb-faq details p { padding: 0 18px 20px; font-size: 14px; }
+          .sb-cta { padding: 84px 20px; }
+          .sb-cta .sb-button-light { width: 100%; }
+          .sb-footer { flex-wrap: wrap; justify-content: center; text-align: center; padding: 22px 18px calc(22px + env(safe-area-inset-bottom)); }
+          .sb-footer > span { width: 100%; }
+        }
+
+        /* TOUCH SCREENS: don't let hover effects stick after a tap */
+        @media (hover: none) {
+          .sb-feature-card:hover { transform: none; background: #fff; color: var(--ink); box-shadow: none; }
+          .sb-feature-card:hover p { color: var(--muted); }
+          .sb-feature-card:hover .sb-feature-icon { transform: none; background: var(--cream); }
+          .sb-cat:hover { transform: none; background: #fff; color: #4a483f; }
+          .sb-preview:hover { transform: none; }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+          .sb-page *,.sb-page *:before,.sb-page *:after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+          .sb-reveal { opacity: 1 !important; transform: none !important; }
+        }
+      `}</style>
+
+      {/* NAVIGATION */}
+      <nav className="sb-nav">
+        <Link to="/" className="sb-brand">
+          <span className="sb-brand-mark">
             <Sparkles size={16} />
           </span>
           StyleBuddy
-        </div>
+        </Link>
 
-        <div className="landing-links">
+        <div className="sb-nav-links">
           <a href="#how">How it works</a>
           <a href="#features">Features</a>
+          <a href="#personal">Your style</a>
+          <a href="#faq">FAQ</a>
         </div>
 
-        <div className="nav-actions">
-          <Link to="/login" className="text-link">
+        <div className="sb-nav-actions">
+          <Link to="/login" className="sb-signin">
             Sign in
           </Link>
 
-          <Link
-            to="/register"
-            className="btn btn-dark compact"
-          >
-            Get started <ArrowRight size={15} />
+          <Link to="/register" className="sb-nav-cta">
+            Get started <ArrowUpRight size={15} />
           </Link>
         </div>
       </nav>
 
-      {/* =====================================================
-          NEW HERO
-          ===================================================== */}
-
-      <section className="sb-hero">
-
-        {/* background atmosphere */}
-        <div className="sb-hero-glow sb-glow-one" />
-        <div className="sb-hero-glow sb-glow-two" />
-
-        <div className="sb-hero-inner">
-
-          {/* ================= LEFT ================= */}
-
+      <main>
+        {/* HERO SECTION */}
+        <section className="sb-hero">
           <div className="sb-hero-copy">
-
-            <div className="sb-eyebrow">
-              <span className="sb-eyebrow-icon">
-                <Sparkles size={13} />
-              </span>
-
-              AI-POWERED PERSONAL STYLING
+            <div className="sb-kicker">
+              <span className="sb-kicker-line" />
+              Your AI stylist is online
             </div>
 
             <h1>
-              Your wardrobe.
+              Your closet.
               <br />
-
-              <em>Your style.</em>
-
+              Your style.
               <br />
-
-              <span>Made effortless.</span>
+              <em>One smart move.</em>
             </h1>
 
-            <p className="sb-hero-description">
-              StyleBuddy understands what you own, what you're
-              dressing for, and how you want to look — then helps
-              you build the outfit.
+            <p className="sb-hero-lede">
+              Meet the personal stylist that understands your wardrobe.
+              Discover combinations, dress for the day and make every piece count.
             </p>
 
             <div className="sb-hero-actions">
-
-              <Link
-                to="/register"
-                className="sb-primary-button"
-              >
-                Build my closet
-                <ArrowRight size={17} />
+              <Link to="/register" className="sb-button-dark">
+                Build my digital closet <ArrowRight size={16} />
               </Link>
 
-              <Link
-                to="/stylist"
-                className="sb-secondary-button"
-              >
-                <Sparkles size={15} />
-                Try AI Stylist
+              <Link to="/stylist" className="sb-button-light">
+                <Sparkles size={15} /> Talk to your stylist
               </Link>
-
             </div>
 
             <div className="sb-proof">
-
               <span>
-                <Check size={13} />
-                Closet-first
+                <Check size={14} /> Built around what you own
               </span>
 
               <span>
-                <Check size={13} />
-                Weather aware
+                <Check size={14} /> Personalised suggestions
               </span>
-
-              <span>
-                <Check size={13} />
-                Personalised
-              </span>
-
             </div>
 
+            <div className="sb-hero-note">
+              Less guessing. More getting dressed.
+            </div>
           </div>
 
-          {/* ================= RIGHT ================= */}
+          {/* 3D STYLIST */}
+          <div
+            className="sb-stage"
+            aria-label="Interactive 3D StyleBuddy stylist"
+          >
+            <div className="sb-stage-halo" />
+            <div className="sb-stage-ring" />
+            <div className="sb-stage-floor" />
 
-          <div className="sb-hero-stage">
-
-            {/* floating weather */}
-
-            <div className="sb-floating-weather">
-
-              <div className="sb-weather-icon">
-                <CloudSun size={17} />
-              </div>
-
-              <div>
-                <strong>{currentLook.temperature}</strong>
-                <span>Light layers</span>
-              </div>
-
+            <div className="sb-character-wrap">
+              <StylistCharacter />
             </div>
 
-            {/* floating style match */}
+            <span className="sb-stage-index">
+              STYLEBUDDY / YOUR PERSONAL STYLIST
+            </span>
 
-            <div className="sb-floating-match">
+            {/* WEATHER CARD */}
+            <div className="sb-float-card sb-float-weather">
+              <span className="sb-float-icon">
+                <CloudSun size={18} />
+              </span>
 
-              <span>TODAY'S LOOK</span>
-
-              <strong>
-                {currentLook.style}
-              </strong>
-
-              <div>
-                <span>{currentLook.match} style match</span>
-                <ArrowRight size={12} />
-              </div>
-
+              <span>
+                <small>THE DAY AHEAD</small>
+                <strong>Weather-aware looks</strong>
+              </span>
             </div>
 
-            {/* small floating sparkle */}
+            {/* STYLE PROFILE CARD */}
+            <div className="sb-float-card sb-float-style">
+              <span className="sb-style-dot" />
 
-            <div className="sb-floating-sparkle">
-              <WandSparkles size={18} />
+              <span>
+                <small>YOUR STYLE PROFILE</small>
+                <strong>Personalised to you</strong>
+              </span>
             </div>
 
-            {/* MAIN AI WINDOW */}
+            {/* OUTFIT PREVIEW */}
+            <div className="sb-look-panel">
+              <div className="sb-look-top">
+                <span className="sb-look-label">
+                  A LOOK FROM YOUR STYLIST
+                </span>
 
-            <div className="sb-ai-window">
-
-              {/* top bar */}
-
-              <div className="sb-ai-top">
-
-                <div className="sb-ai-brand">
-
-                  <div className="sb-ai-logo">
-                    <Sparkles size={15} />
-                  </div>
-
-                  <div>
-                    <strong>StyleBuddy AI</strong>
-                    <span>Your personal stylist</span>
-                  </div>
-
-                </div>
-
-                <div className="sb-live">
-                  <span />
-                  LIVE
-                </div>
-
+                <span className="sb-look-live">
+                  <i /> LIVE PREVIEW
+                </span>
               </div>
 
-              <div className="sb-ai-line" />
-
-              {/* user question */}
-
-              <div className="sb-question">
-
-                <span>YOU</span>
-
-                <div>
-                  {currentLook.request}
-                </div>
-
+              <div className="sb-look-question">
+                {currentLook.request}
               </div>
 
-              {/* AI response */}
-
-              <div className="sb-ai-answer">
-
-                <div className="sb-answer-heading">
-
-                  <div>
-                    <Sparkles size={12} />
-                  </div>
-
-                  <span>
-                    {isBuilding
-                      ? "Styling your look..."
-                      : "Your look is ready"}
-                  </span>
-
-                </div>
-
-                {/* outfit cards */}
-
-                <div
-                  className={`sb-outfit-cards ${
-                    isBuilding
-                      ? "sb-building"
-                      : "sb-built"
-                  }`}
-                >
-
-                  {currentLook.items.map((item, index) => (
+              <div
+                className={`sb-look-items ${
+                  isBuilding ? "sb-look-loading" : ""
+                }`}
+              >
+                {currentLook.items.map((item, index) => (
+                  <div
+                    className="sb-look-item"
+                    key={`${lookIndex}-${item}`}
+                  >
                     <div
-                      className="sb-outfit-item"
-                      key={`${lookIndex}-${item.name}`}
+                      className="sb-look-swatch"
                       style={{
-                        animationDelay: `${index * 0.18}s`,
+                        background: currentLook.colors[index],
                       }}
-                    >
+                    />
 
-                      <div className="sb-item-image">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                        />
-                      </div>
-
-                      <span>{item.name}</span>
-
-                    </div>
-                  ))}
-
-                </div>
-
-                {/* context */}
-
-                <div className="sb-context">
-
-                  <span>
-                    <CloudSun size={11} />
-                    {currentLook.temperature}
-                  </span>
-
-                  <span>
-                    <Shirt size={11} />
-                    {currentLook.occasion}
-                  </span>
-
-                  <span>
-                    <Heart size={11} />
-                    {currentLook.style}
-                  </span>
-
-                </div>
-
-                {/* result */}
-
-                <div
-                  className={`sb-result ${
-                    isBuilding
-                      ? "sb-result-hidden"
-                      : "sb-result-visible"
-                  }`}
-                >
-
-                  <div className="sb-result-check">
-                    <Check size={13} />
+                    <span>{item}</span>
                   </div>
+                ))}
+              </div>
 
+              <div className="sb-look-footer">
+                <span>
+                  {currentLook.occasion} · {currentLook.temperature}C ·{" "}
+                  {currentLook.style}
+                </span>
+
+                <span className="sb-look-score">
+                  {isBuilding ? "···" : currentLook.match}
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SCROLLING TICKER */}
+        <div className="sb-marquee" aria-hidden="true">
+          <div className="sb-marquee-track">
+            {[...ticker, ...ticker, ...ticker, ...ticker].map((text, i) => (
+              <span key={i}>{text}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* CLOSET CATEGORIES */}
+        <div className="sb-cats sb-reveal">
+          <p className="sb-cats-title">
+            Every kind of piece, in one closet:
+          </p>
+          <div className="sb-cat-row">
+            {categories.map((cat) => (
+              <span className="sb-cat" key={cat}>
+                {cat}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* FEATURES */}
+        <section id="features" className="sb-section">
+          <div className="sb-section-head sb-reveal">
+            <div>
+              <div className="sb-section-kicker">
+                The StyleBuddy system
+              </div>
+
+              <h2>
+                Everything your wardrobe needs.
+                <br />
+                <em>Nothing it doesn't.</em>
+              </h2>
+            </div>
+
+            <p className="sb-section-intro">
+              One connected experience to organise what you own, understand
+              your style and make getting dressed feel effortless.
+            </p>
+          </div>
+
+          <div className="sb-feature-grid">
+            {features.map(({ number, title, description, Icon }) => (
+              <article
+                className="sb-feature-card sb-reveal"
+                style={{ "--sb-delay": `${Number(number) * 75}ms` }}
+                key={number}
+              >
+                <div className="sb-feature-meta">
+                  <span>{number} / 06</span>
+                  <ArrowUpRight size={16} />
+                </div>
+
+                <div className="sb-feature-icon">
+                  <Icon size={24} />
+                </div>
+
+                <h3>{title}</h3>
+                <p>{description}</p>
+
+                <div className="sb-feature-watermark">
+                  <Layers3 size={96} strokeWidth={0.7} />
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* DASHBOARD PREVIEW */}
+        <section className="sb-section" style={{ paddingTop: 0 }}>
+          <div className="sb-section-head sb-reveal">
+            <div>
+              <div className="sb-section-kicker">Your style space</div>
+              <h2>
+                A home for <em>every look.</em>
+              </h2>
+            </div>
+            <p className="sb-section-intro">
+              Your closet, AI stylist, saved outfits and shopping ideas,
+              all in one calm dashboard.
+            </p>
+          </div>
+
+          <div className="sb-preview-wrap sb-reveal">
+            <div className="sb-preview" aria-hidden="true">
+              <div className="sb-pv-side">
+                <div className="sb-pv-brand">
+                  <span>
+                    <Sparkles size={13} />
+                  </span>
+                  StyleBuddy
+                </div>
+                <div className="sb-pv-item on">
+                  <LayoutGrid size={15} /> Dashboard
+                </div>
+                <div className="sb-pv-item">
+                  <Shirt size={15} /> My Closet
+                </div>
+                <div className="sb-pv-item">
+                  <MessageCircle size={15} /> AI Stylist
+                </div>
+                <div className="sb-pv-item">
+                  <Heart size={15} /> Saved Outfits
+                </div>
+                <div className="sb-pv-item">
+                  <ShoppingBag size={15} /> Shop the Look
+                </div>
+              </div>
+
+              <div className="sb-pv-main">
+                <h4>Good morning.</h4>
+                <p>Your wardrobe, your style, your next look.</p>
+
+                <div className="sb-pv-hero">
                   <div>
                     <strong>
-                      Perfect match
+                      A better outfit
+                      <br />
+                      <em>is one click away.</em>
                     </strong>
-
-                    <span>
-                      Built around your wardrobe
+                    <span className="sb-pv-btn">
+                      <Sparkles size={13} /> Style me
+                    </span>
+                    <span className="sb-pv-btn" style={{ marginLeft: 8, color: "#151513", background: "#fff" }}>
+                      <Plus size={13} /> Add clothes
                     </span>
                   </div>
 
-                  <em>
-                    {currentLook.match}
-                  </em>
-
+                  <div className="sb-pv-tiles">
+                    <span className="sb-pv-tile"><Shirt size={22} /></span>
+                    <span className="sb-pv-tile"><Layers3 size={22} /></span>
+                    <span className="sb-pv-tile"><ShoppingBag size={22} /></span>
+                    <span className="sb-pv-tile"><Heart size={22} /></span>
+                    <span className="sb-pv-tile"><CloudSun size={22} /></span>
+                    <span className="sb-pv-tile"><Sparkles size={22} /></span>
+                  </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
+        {/* CINEMATIC 3D HOW IT WORKS */}
+        <section id="how" className="sb-process">
+          <div className="sb-process-inner">
+            <div className="sb-section-kicker">
+              The StyleBuddy experience
+            </div>
+
+            <div className="sb-section-head">
+              <h2>
+                From wardrobe
+                <br />
+                to <em>your signature style.</em>
+              </h2>
+
+              <p className="sb-section-intro">
+                Scroll through the journey from your real wardrobe to an outfit that feels like you.
+              </p>
+            </div>
+
+            <div className="sb-carousel-stage">
+              {steps.map(([number, title, description], index) => {
+                const offset = index - activeStep;
+                const isActive = index === activeStep;
+                const StepIcons = [
+                  ScanFace,
+                  Shirt,
+                  MessageCircle,
+                  Sparkles,
+                ];
+                const StepIcon = StepIcons[index];
+
+                return (
+                  <article
+                    key={number}
+                    className={`sb-step-card ${
+                      isActive ? "active" : ""
+                    } ${
+                      Math.abs(offset) === 1 ? "side" : ""
+                    }`}
+                    style={{
+                      transform: `
+                        translateX(${offset * 390}px)
+                        translateZ(${isActive ? 0 : -180}px)
+                        rotateY(${offset * -32}deg)
+                        scale(${isActive ? 1 : 0.78})
+                      `,
+                      opacity: Math.abs(offset) > 1 ? 0 : 1,
+                      zIndex: 10 - Math.abs(offset),
+                      pointerEvents: isActive ? "auto" : "none",
+                    }}
+                    aria-hidden={!isActive}
+                  >
+                    <div className="sb-step-top">
+                      <span>STYLEBUDDY / PROCESS</span>
+                      <span>{number} / 04</span>
+                    </div>
+
+                    <div className="sb-step-visual">
+                      <div className="sb-step-visual-icon">
+                        <StepIcon size={36} strokeWidth={1.5} />
+                      </div>
+                    </div>
+
+                    <div className="sb-step-bottom">
+                      <h3>{title}</h3>
+                      <p>{description}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+
+            <div className="sb-process-counter">
+              0{activeStep + 1} / 04
+            </div>
+
+            <div className="sb-process-progress">
+              <div
+                className="sb-process-progress-fill"
+                style={{
+                  width: `${
+                    ((activeStep + 1) / steps.length) * 100
+                  }%`,
+                }}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* PERSONAL WARDROBE SECTION */}
+        <section id="personal" className="sb-section">
+          <div className="sb-personal">
+            <div className="sb-personal-art sb-reveal sb-reveal-left">
+              <div className="sb-personal-monogram">S</div>
+
+              <span className="sb-personal-tag one">
+                Your wardrobe, understood
+              </span>
+
+              <span className="sb-personal-tag two">
+                Style that feels like you
+              </span>
+
+              <span className="sb-personal-tag three">
+                Made for real life
+              </span>
+            </div>
+
+            <div className="sb-personal-copy sb-reveal sb-reveal-right">
+              <div className="sb-section-kicker">
+                Not just another outfit app
               </div>
 
-              {/* search */}
+              <h2>
+                Good style starts with <em>what you have.</em>
+              </h2>
 
-              <div className="sb-search">
+              <p>
+                StyleBuddy puts your own wardrobe first. Instead of starting
+                with endless products, it helps you see new combinations in
+                the clothes already hanging in your closet — then helps you
+                fill genuine gaps.
+              </p>
 
-                <Search size={14} />
-
+              <div className="sb-personal-points">
                 <span>
-                  Ask me what to wear...
+                  <Check size={14} />
+                  Recommendations grounded in your closet
                 </span>
 
-                <div>
-                  <ArrowRight size={13} />
-                </div>
+                <span>
+                  <Check size={14} />
+                  Suggestions shaped around your preferences
+                </span>
 
+                <span>
+                  <Check size={14} />
+                  Shopping only when it adds value
+                </span>
               </div>
 
+              <Link to="/stylist" className="sb-button-dark">
+                Meet your AI stylist <ArrowRight size={16} />
+              </Link>
             </div>
-
-            {/* floating shopping */}
-
-            <div className="sb-shopping">
-
-              <div className="sb-shopping-icon">
-                <ShoppingBag size={15} />
-              </div>
-
-              <div>
-                <span>SMART SHOPPING</span>
-                <strong>
-                  Complete your look
-                </strong>
-              </div>
-
-              <ArrowRight size={13} />
-
-            </div>
-
           </div>
-
-        </div>
-
-        {/* scroll indicator */}
-
-        <div className="sb-scroll">
-          <span>SCROLL TO EXPLORE</span>
-
-          <div>
-            <i />
-          </div>
-        </div>
-
-      </section>
-
-      {/* =====================================================
-          HERO-ONLY STYLES
-          ===================================================== */}
-
-      <style>{`
-
-        /* ===================================================
-           HERO
-           =================================================== */
-
-        .sb-hero {
-          position: relative;
-          min-height: calc(100vh - 80px);
-          overflow: hidden;
-          background: #f7f6f2;
-          display: flex;
-          align-items: center;
-        }
-
-        .sb-hero-inner {
-          position: relative;
-          z-index: 2;
-
-          width: min(1360px, calc(100% - 100px));
-          margin: 0 auto;
-
-          display: grid;
-          grid-template-columns: 0.9fr 1.1fr;
-          align-items: center;
-
-          gap: 60px;
-
-          padding: 70px 0 85px;
-        }
-
-        /* ===================================================
-           BACKGROUND
-           =================================================== */
-
-        .sb-hero-glow {
-          position: absolute;
-          border-radius: 50%;
-          pointer-events: none;
-          filter: blur(2px);
-        }
-
-        .sb-glow-one {
-          width: 520px;
-          height: 520px;
-
-          right: 2%;
-          top: -300px;
-
-          background: rgba(221, 214, 199, 0.35);
-        }
-
-        .sb-glow-two {
-          width: 420px;
-          height: 420px;
-
-          left: 22%;
-          bottom: -300px;
-
-          background: rgba(224, 220, 209, 0.28);
-        }
-
-        /* ===================================================
-           LEFT
-           =================================================== */
-
-        .sb-hero-copy {
-          position: relative;
-          z-index: 5;
-          max-width: 650px;
-        }
-
-        .sb-eyebrow {
-          display: flex;
-          align-items: center;
-          gap: 9px;
-
-          color: #88837a;
-
-          font-size: 10px;
-          font-weight: 600;
-
-          letter-spacing: 0.22em;
-
-          margin-bottom: 25px;
-
-          animation: sbFadeUp 0.8s ease both;
-        }
-
-        .sb-eyebrow-icon {
-          width: 27px;
-          height: 27px;
-
-          border: 1px solid #dedbd3;
-          border-radius: 50%;
-
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          color: #24231f;
-          background: rgba(255,255,255,0.6);
-        }
-
-        .sb-hero-copy h1 {
-          margin: 0;
-
-          color: #11110f;
-
-          font-size: clamp(58px, 6.2vw, 92px);
-          line-height: 0.91;
-
-          letter-spacing: -0.065em;
-          font-weight: 650;
-
-          animation: sbFadeUp 0.9s 0.08s ease both;
-        }
-
-        .sb-hero-copy h1 em {
-          font-family: Georgia, "Times New Roman", serif;
-          font-style: italic;
-          font-weight: 400;
-          letter-spacing: -0.055em;
-        }
-
-        .sb-hero-copy h1 span {
-          display: inline-block;
-        }
-
-        .sb-hero-description {
-          max-width: 555px;
-
-          margin: 34px 0 0;
-
-          color: #77736c;
-
-          font-size: 15px;
-          line-height: 1.75;
-
-          animation: sbFadeUp 0.9s 0.16s ease both;
-        }
-
-        /* ===================================================
-           BUTTONS
-           =================================================== */
-
-        .sb-hero-actions {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-
-          margin-top: 30px;
-
-          animation: sbFadeUp 0.9s 0.24s ease both;
-        }
-
-        .sb-primary-button,
-        .sb-secondary-button {
-          min-height: 52px;
-
-          padding: 0 21px;
-
-          border-radius: 11px;
-
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-
-          gap: 10px;
-
-          text-decoration: none;
-
-          font-size: 13px;
-          font-weight: 600;
-
-          transition:
-            transform 0.25s ease,
-            box-shadow 0.25s ease,
-            background 0.25s ease;
-        }
-
-        .sb-primary-button {
-          color: white;
-          background: #11110f;
-        }
-
-        .sb-primary-button:hover {
-          transform: translateY(-3px);
-          box-shadow:
-            0 15px 35px rgba(17,17,15,0.18);
-        }
-
-        .sb-secondary-button {
-          color: #1b1a17;
-
-          background: rgba(255,255,255,0.75);
-
-          border: 1px solid #e2ded6;
-        }
-
-        .sb-secondary-button:hover {
-          transform: translateY(-3px);
-          background: white;
-        }
-
-        /* ===================================================
-           PROOF
-           =================================================== */
-
-        .sb-proof {
-          display: flex;
-          flex-wrap: wrap;
-
-          gap: 18px;
-
-          margin-top: 25px;
-
-          color: #98938a;
-
-          font-size: 11px;
-
-          animation: sbFadeUp 0.9s 0.32s ease both;
-        }
-
-        .sb-proof span {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-        }
-
-        .sb-proof svg {
-          color: #171714;
-        }
-
-        /* ===================================================
-           RIGHT STAGE
-           =================================================== */
-
-        .sb-hero-stage {
-          position: relative;
-
-          min-height: 640px;
-
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        /* ===================================================
-           AI WINDOW
-           =================================================== */
-
-        .sb-ai-window {
-          position: relative;
-          z-index: 4;
-
-          width: min(515px, 90%);
-
-          padding: 22px;
-
-          border-radius: 25px;
-
-          background: rgba(255,255,255,0.88);
-
-          border: 1px solid rgba(218,215,207,0.95);
-
-          box-shadow:
-            0 45px 100px rgba(40,36,28,0.12),
-            0 10px 30px rgba(40,36,28,0.05);
-
-          backdrop-filter: blur(20px);
-
-          transform:
-            perspective(1000px)
-            rotateY(-4deg)
-            rotateX(2deg);
-
-          animation:
-            sbPanelEntrance 1s 0.15s ease both,
-            sbPanelFloat 6s 1.2s ease-in-out infinite;
-        }
-
-        .sb-ai-top {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .sb-ai-brand {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-        }
-
-        .sb-ai-logo {
-          width: 36px;
-          height: 36px;
-
-          border-radius: 10px;
-
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          color: white;
-          background: #11110f;
-        }
-
-        .sb-ai-brand strong {
-          display: block;
-
-          color: #22211e;
-
-          font-size: 13px;
-        }
-
-        .sb-ai-brand span {
-          display: block;
-
-          margin-top: 2px;
-
-          color: #99948a;
-
-          font-size: 9px;
-        }
-
-        .sb-live {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-
-          color: #8e897f;
-
-          font-size: 8px;
-          letter-spacing: 0.16em;
-        }
-
-        .sb-live span {
-          width: 6px;
-          height: 6px;
-
-          border-radius: 50%;
-
-          background: #78a66c;
-
-          animation: sbPulse 2s infinite;
-        }
-
-        .sb-ai-line {
-          height: 1px;
-
-          margin: 18px 0;
-
-          background: #eae7df;
-        }
-
-        /* ===================================================
-           QUESTION
-           =================================================== */
-
-        .sb-question {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-        }
-
-        .sb-question > span {
-          margin-bottom: 6px;
-
-          color: #aaa59b;
-
-          font-size: 7px;
-          letter-spacing: 0.18em;
-        }
-
-        .sb-question > div {
-          max-width: 82%;
-
-          padding: 11px 14px;
-
-          border-radius: 13px 13px 3px 13px;
-
-          background: #f2f0eb;
-
-          color: #34322e;
-
-          font-size: 11px;
-          line-height: 1.45;
-        }
-
-        /* ===================================================
-           AI ANSWER
-           =================================================== */
-
-        .sb-ai-answer {
-          margin-top: 20px;
-        }
-
-        .sb-answer-heading {
-          display: flex;
-          align-items: center;
-          gap: 7px;
-
-          color: #777269;
-
-          font-size: 10px;
-        }
-
-        .sb-answer-heading > div {
-          width: 22px;
-          height: 22px;
-
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          border-radius: 7px;
-
-          background: #eeece6;
-          color: #292823;
-        }
-
-        /* ===================================================
-           OUTFIT
-           =================================================== */
-
-        .sb-outfit-cards {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-
-          gap: 9px;
-
-          margin-top: 14px;
-        }
-
-        .sb-outfit-item {
-          opacity: 0;
-
-          transform:
-            translateY(20px)
-            scale(0.93);
-        }
-
-        .sb-building .sb-outfit-item {
-          animation:
-            sbItemBuild 0.7s ease forwards;
-        }
-
-        .sb-built .sb-outfit-item {
-          animation:
-            sbItemReady 0.6s ease forwards;
-        }
-
-        .sb-item-image {
-          height: 112px;
-
-          overflow: hidden;
-
-          border-radius: 14px;
-
-          background: #efede7;
-
-          border: 1px solid #e3dfd7;
-        }
-
-        .sb-item-image img {
-          width: 100%;
-          height: 100%;
-
-          object-fit: cover;
-
-          display: block;
-
-          filter: saturate(0.78);
-
-          transition:
-            transform 0.4s ease,
-            filter 0.4s ease;
-        }
-
-        .sb-outfit-item:hover img {
-          transform: scale(1.06);
-          filter: saturate(1);
-        }
-
-        .sb-outfit-item > span {
-          display: block;
-
-          margin-top: 7px;
-
-          color: #77736b;
-
-          font-size: 9px;
-          font-weight: 600;
-
-          text-align: center;
-        }
-
-        /* ===================================================
-           CONTEXT
-           =================================================== */
-
-        .sb-context {
-          display: flex;
-          flex-wrap: wrap;
-
-          gap: 6px;
-
-          margin-top: 15px;
-        }
-
-        .sb-context span {
-          display: flex;
-          align-items: center;
-          gap: 4px;
-
-          padding: 6px 8px;
-
-          border-radius: 7px;
-
-          color: #858077;
-
-          background: #f6f4ef;
-
-          font-size: 8px;
-        }
-
-        /* ===================================================
-           RESULT
-           =================================================== */
-
-        .sb-result {
-          display: flex;
-          align-items: center;
-
-          gap: 9px;
-
-          margin-top: 13px;
-
-          padding: 10px 11px;
-
-          border-radius: 10px;
-
-          background: #f5f5f0;
-
-          border: 1px solid #e7e4dc;
-
-          transition:
-            opacity 0.5s ease,
-            transform 0.5s ease;
-        }
-
-        .sb-result-hidden {
-          opacity: 0;
-          transform: translateY(7px);
-        }
-
-        .sb-result-visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        .sb-result-check {
-          width: 24px;
-          height: 24px;
-
-          flex-shrink: 0;
-
-          border-radius: 50%;
-
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          color: white;
-          background: #11110f;
-        }
-
-        .sb-result > div:nth-child(2) {
-          flex: 1;
-        }
-
-        .sb-result strong {
-          display: block;
-
-          color: #34322e;
-
-          font-size: 9px;
-        }
-
-        .sb-result span {
-          display: block;
-
-          margin-top: 2px;
-
-          color: #99948b;
-
-          font-size: 8px;
-        }
-
-        .sb-result em {
-          color: #282720;
-
-          font-family: Georgia, serif;
-
-          font-size: 18px;
-
-          font-style: italic;
-        }
-
-        /* ===================================================
-           SEARCH
-           =================================================== */
-
-        .sb-search {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-
-          height: 41px;
-
-          margin-top: 16px;
-
-          padding: 0 8px 0 12px;
-
-          border-radius: 10px;
-
-          background: white;
-
-          border: 1px solid #e4e1d9;
-
-          color: #aaa59c;
-
-          font-size: 9px;
-        }
-
-        .sb-search > div {
-          width: 27px;
-          height: 27px;
-
-          margin-left: auto;
-
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          border-radius: 7px;
-
-          color: white;
-          background: #11110f;
-        }
-
-        /* ===================================================
-           FLOATING WEATHER
-           =================================================== */
-
-        .sb-floating-weather {
-          position: absolute;
-
-          z-index: 7;
-
-          right: 1%;
-          top: 62px;
-
-          display: flex;
-          align-items: center;
-          gap: 10px;
-
-          padding: 12px 15px;
-
-          border-radius: 14px;
-
-          background: rgba(255,255,255,0.94);
-
-          border: 1px solid #e1ded6;
-
-          box-shadow:
-            0 18px 45px rgba(30,27,21,0.09);
-
-          animation:
-            sbFloatEntrance 0.8s 0.7s ease both,
-            sbGentleFloat 5s 1.5s ease-in-out infinite;
-        }
-
-        .sb-weather-icon {
-          width: 31px;
-          height: 31px;
-
-          border-radius: 9px;
-
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          background: #f1eee7;
-        }
-
-        .sb-floating-weather strong {
-          display: block;
-
-          color: #292822;
-
-          font-size: 13px;
-        }
-
-        .sb-floating-weather span {
-          display: block;
-
-          margin-top: 2px;
-
-          color: #969188;
-
-          font-size: 8px;
-        }
-
-        /* ===================================================
-           MATCH CARD
-           =================================================== */
-
-        .sb-floating-match {
-          position: absolute;
-
-          z-index: 7;
-
-          left: 0;
-          bottom: 115px;
-
-          min-width: 145px;
-
-          padding: 15px 17px;
-
-          border-radius: 14px;
-
-          background: rgba(255,255,255,0.94);
-
-          border: 1px solid #e1ded6;
-
-          box-shadow:
-            0 18px 45px rgba(30,27,21,0.09);
-
-          animation:
-            sbFloatEntrance 0.8s 0.9s ease both,
-            sbGentleFloatReverse 6s 1.5s ease-in-out infinite;
-        }
-
-        .sb-floating-match > span:first-child {
-          display: block;
-
-          color: #aaa59b;
-
-          font-size: 7px;
-          letter-spacing: 0.15em;
-        }
-
-        .sb-floating-match strong {
-          display: block;
-
-          margin-top: 7px;
-
-          color: #292822;
-
-          font-size: 13px;
-        }
-
-        .sb-floating-match > div {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-
-          gap: 12px;
-
-          margin-top: 6px;
-
-          color: #8f8a81;
-
-          font-size: 8px;
-        }
-
-        /* ===================================================
-           SPARKLE
-           =================================================== */
-
-        .sb-floating-sparkle {
-          position: absolute;
-
-          z-index: 2;
-
-          left: 9%;
-          top: 150px;
-
-          width: 44px;
-          height: 44px;
-
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          border-radius: 14px;
-
-          background: rgba(255,255,255,0.6);
-
-          border: 1px solid #e0ddd5;
-
-          color: #38362f;
-
-          animation:
-            sbSparkleFloat 5s ease-in-out infinite;
-        }
-
-        /* ===================================================
-           SHOPPING CARD
-           =================================================== */
-
-        .sb-shopping {
-          position: absolute;
-
-          z-index: 7;
-
-          right: 1%;
-          bottom: 52px;
-
-          display: flex;
-          align-items: center;
-          gap: 9px;
-
-          padding: 10px 12px;
-
-          border-radius: 12px;
-
-          color: white;
-          background: #11110f;
-
-          box-shadow:
-            0 15px 35px rgba(17,17,15,0.18);
-
-          animation:
-            sbFloatEntrance 0.8s 1.1s ease both,
-            sbGentleFloat 6.5s 2s ease-in-out infinite;
-        }
-
-        .sb-shopping-icon {
-          width: 28px;
-          height: 28px;
-
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          border-radius: 8px;
-
-          background: rgba(255,255,255,0.1);
-        }
-
-        .sb-shopping > div:nth-child(2) {
-          display: flex;
-          flex-direction: column;
-          gap: 3px;
-        }
-
-        .sb-shopping span {
-          color: #aaa69d;
-
-          font-size: 6px;
-          letter-spacing: 0.14em;
-        }
-
-        .sb-shopping strong {
-          font-size: 9px;
-          font-weight: 500;
-        }
-
-        /* ===================================================
-           SCROLL
-           =================================================== */
-
-        .sb-scroll {
-          position: absolute;
-
-          z-index: 10;
-
-          left: 50%;
-          bottom: 20px;
-
-          transform: translateX(-50%);
-
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-
-          gap: 8px;
-
-          color: #aaa59b;
-
-          font-size: 7px;
-          letter-spacing: 0.18em;
-        }
-
-        .sb-scroll > div {
-          width: 1px;
-          height: 30px;
-
-          overflow: hidden;
-
-          background: #d7d3ca;
-        }
-
-        .sb-scroll i {
-          display: block;
-
-          width: 100%;
-          height: 50%;
-
-          background: #282721;
-
-          animation: sbScroll 1.7s infinite;
-        }
-
-        /* ===================================================
-           ANIMATIONS
-           =================================================== */
-
-        @keyframes sbFadeUp {
-          from {
-            opacity: 0;
-            transform: translateY(25px);
-          }
-
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes sbPanelEntrance {
-          from {
-            opacity: 0;
-
-            transform:
-              perspective(1000px)
-              translateY(35px)
-              rotateY(-10deg)
-              rotateX(5deg)
-              scale(0.95);
-          }
-
-          to {
-            opacity: 1;
-
-            transform:
-              perspective(1000px)
-              translateY(0)
-              rotateY(-4deg)
-              rotateX(2deg)
-              scale(1);
-          }
-        }
-
-        @keyframes sbPanelFloat {
-          0%,
-          100% {
-            transform:
-              perspective(1000px)
-              translateY(0)
-              rotateY(-4deg)
-              rotateX(2deg);
-          }
-
-          50% {
-            transform:
-              perspective(1000px)
-              translateY(-8px)
-              rotateY(-2deg)
-              rotateX(2deg);
-          }
-        }
-
-        @keyframes sbItemBuild {
-          0% {
-            opacity: 0;
-            transform:
-              translateY(25px)
-              scale(0.88);
-          }
-
-          100% {
-            opacity: 1;
-            transform:
-              translateY(0)
-              scale(1);
-          }
-        }
-
-        @keyframes sbItemReady {
-          from {
-            opacity: 0;
-            transform: scale(0.94);
-          }
-
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-
-        @keyframes sbFloatEntrance {
-          from {
-            opacity: 0;
-            transform: translateY(25px) scale(0.92);
-          }
-
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        @keyframes sbGentleFloat {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-
-          50% {
-            transform: translateY(-8px);
-          }
-        }
-
-        @keyframes sbGentleFloatReverse {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-
-          50% {
-            transform: translateY(8px);
-          }
-        }
-
-        @keyframes sbSparkleFloat {
-          0%,
-          100% {
-            transform:
-              translate(0, 0)
-              rotate(-4deg);
-          }
-
-          50% {
-            transform:
-              translate(8px, -10px)
-              rotate(6deg);
-          }
-        }
-
-        @keyframes sbPulse {
-          0% {
-            box-shadow:
-              0 0 0 0 rgba(120,166,108,0.3);
-          }
-
-          70% {
-            box-shadow:
-              0 0 0 6px rgba(120,166,108,0);
-          }
-
-          100% {
-            box-shadow:
-              0 0 0 0 rgba(120,166,108,0);
-          }
-        }
-
-        @keyframes sbScroll {
-          0% {
-            transform: translateY(-100%);
-          }
-
-          100% {
-            transform: translateY(200%);
-          }
-        }
-
-        /* ===================================================
-           TABLET
-           =================================================== */
-
-        @media (max-width: 1050px) {
-
-          .sb-hero-inner {
-            grid-template-columns: 1fr;
-
-            gap: 40px;
-
-            padding-top: 55px;
-          }
-
-          .sb-hero-copy {
-            max-width: 760px;
-          }
-
-          .sb-hero-stage {
-            min-height: 570px;
-          }
-
-        }
-
-        /* ===================================================
-           MOBILE
-           =================================================== */
-
-        @media (max-width: 650px) {
-
-          .sb-hero {
-            min-height: auto;
-          }
-
-          .sb-hero-inner {
-            width: calc(100% - 36px);
-
-            padding: 45px 0 60px;
-
-            gap: 35px;
-          }
-
-          .sb-hero-copy h1 {
-            font-size: clamp(48px, 14vw, 67px);
-          }
-
-          .sb-hero-description {
-            font-size: 14px;
-
-            margin-top: 25px;
-          }
-
-          .sb-hero-actions {
-            flex-direction: column;
-            align-items: stretch;
-          }
-
-          .sb-primary-button,
-          .sb-secondary-button {
-            width: 100%;
-          }
-
-          .sb-proof {
-            gap: 11px 17px;
-          }
-
-          .sb-hero-stage {
-            min-height: 520px;
-          }
-
-          .sb-ai-window {
-            width: 100%;
-
-            padding: 17px;
-
-            border-radius: 20px;
-
-            transform: none;
-
-            animation:
-              sbPanelEntrance 1s 0.15s ease both,
-              sbMobileFloat 6s 1.2s ease-in-out infinite;
-          }
-
-          .sb-item-image {
-            height: 88px;
-          }
-
-          .sb-floating-weather {
-            right: -3px;
-            top: 0;
-
-            transform: scale(0.88);
-          }
-
-          .sb-floating-match {
-            left: -3px;
-            bottom: 65px;
-
-            transform: scale(0.88);
-          }
-
-          .sb-shopping {
-            right: -3px;
-            bottom: 5px;
-
-            transform: scale(0.88);
-          }
-
-          .sb-floating-sparkle {
-            display: none;
-          }
-
-          .sb-scroll {
-            display: none;
-          }
-
-        }
-
-        @keyframes sbMobileFloat {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-
-          50% {
-            transform: translateY(-5px);
-          }
-        }
-          /* =========================================================
-   DYNAMIC STYLEBUDDY FEATURE SECTION
-   ========================================================= */
-
-.sb-features {
-  position: relative;
-  overflow: hidden;
-}
-
-/* ---------------------------------------------------------
-   INTRO
-   --------------------------------------------------------- */
-
-.sb-features-intro {
-  position: relative;
-}
-
-.sb-features-intro p {
-  max-width: 560px;
-
-  margin-top: 22px;
-
-  color: #858077;
-
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-/* ---------------------------------------------------------
-   GRID
-   --------------------------------------------------------- */
-
-.sb-feature-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
-  gap: 14px;
-
-  margin-top: 55px;
-}
-
-/* ---------------------------------------------------------
-   CARD
-   --------------------------------------------------------- */
-
-.sb-feature-card {
-  position: relative;
-
-  min-height: 430px;
-
-  padding: 25px;
-
-  overflow: hidden;
-
-  border-radius: 18px;
-
-  background: #fff;
-
-  border: 1px solid #e4e1d9;
-
-  display: flex;
-  flex-direction: column;
-
-  cursor: default;
-
-  transition:
-    transform 0.45s cubic-bezier(.2,.8,.2,1),
-    box-shadow 0.45s ease,
-    border-color 0.45s ease;
-
-  animation: sbFeatureReveal 0.8s ease both;
-}
-
-.sb-feature-card:nth-child(1) {
-  animation-delay: 0.05s;
-}
-
-.sb-feature-card:nth-child(2) {
-  animation-delay: 0.1s;
-}
-
-.sb-feature-card:nth-child(3) {
-  animation-delay: 0.15s;
-}
-
-.sb-feature-card:nth-child(4) {
-  animation-delay: 0.2s;
-}
-
-.sb-feature-card:nth-child(5) {
-  animation-delay: 0.25s;
-}
-
-.sb-feature-card:nth-child(6) {
-  animation-delay: 0.3s;
-}
-
-.sb-feature-card:hover {
-  transform: translateY(-8px);
-
-  border-color: #d4d0c7;
-
-  box-shadow:
-    0 25px 55px rgba(35, 31, 25, 0.1);
-}
-
-/* ---------------------------------------------------------
-   TOP
-   --------------------------------------------------------- */
-
-.sb-feature-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.sb-feature-number {
-  color: #aaa59b;
-
-  font-size: 9px;
-
-  letter-spacing: 0.12em;
-}
-
-.sb-feature-arrow {
-  width: 32px;
-  height: 32px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  color: #817c73;
-
-  border: 1px solid #e5e1d9;
-
-  opacity: 0;
-
-  transform: translate(-5px, 5px);
-
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease,
-    background 0.3s ease;
-}
-
-.sb-feature-card:hover .sb-feature-arrow {
-  opacity: 1;
-
-  transform: translate(0, 0);
-
-  background: #f5f3ee;
-}
-
-/* ---------------------------------------------------------
-   ICON
-   --------------------------------------------------------- */
-
-.sb-feature-icon {
-  width: 50px;
-  height: 50px;
-
-  margin-top: 30px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 14px;
-
-  color: #22211d;
-
-  background: #f5f3ed;
-
-  border: 1px solid #e2ded5;
-
-  transition:
-    transform 0.4s cubic-bezier(.2,.8,.2,1),
-    background 0.3s ease;
-}
-
-.sb-feature-card:hover .sb-feature-icon {
-  transform:
-    translateY(-3px)
-    rotate(-4deg);
-
-  background: #eeece5;
-}
-
-/* ---------------------------------------------------------
-   CONTENT
-   --------------------------------------------------------- */
-
-.sb-feature-content {
-  position: relative;
-  z-index: 3;
-
-  margin-top: 25px;
-}
-
-.sb-feature-content h3 {
-  margin: 0;
-
-  color: #161613;
-
-  font-size: 18px;
-
-  letter-spacing: -0.025em;
-}
-
-.sb-feature-content p {
-  max-width: 330px;
-
-  margin: 10px 0 0;
-
-  color: #817c73;
-
-  font-size: 13px;
-
-  line-height: 1.65;
-}
-
-/* ---------------------------------------------------------
-   VISUAL AREA
-   --------------------------------------------------------- */
-
-.sb-feature-visual {
-  position: absolute;
-
-  left: 25px;
-  right: 25px;
-  bottom: 25px;
-
-  height: 125px;
-
-  border-radius: 14px;
-
-  background: #f6f4ef;
-
-  border: 1px solid #e8e4dc;
-
-  overflow: hidden;
-
-  transition:
-    transform 0.45s ease,
-    background 0.45s ease;
-}
-
-.sb-feature-card:hover .sb-feature-visual {
-  transform: translateY(-3px);
-
-  background: #f2f0ea;
-}
-
-/* =========================================================
-   SCANNER
-   ========================================================= */
-
-.scanner-visual {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-}
-
-.scanner-frame {
-  position: relative;
-
-  width: 78px;
-  height: 78px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 1px solid #cfcac0;
-
-  border-radius: 17px;
-
-  color: #454139;
-
-  animation:
-    scannerPulse 3s ease-in-out infinite;
-}
-
-.scanner-frame::before,
-.scanner-frame::after {
-  content: "";
-
-  position: absolute;
-
-  width: 12px;
-  height: 12px;
-
-  border-color: #24221e;
-  border-style: solid;
-}
-
-.scanner-frame::before {
-  left: 7px;
-  top: 7px;
-
-  border-width: 1px 0 0 1px;
-}
-
-.scanner-frame::after {
-  right: 7px;
-  bottom: 7px;
-
-  border-width: 0 1px 1px 0;
-}
-
-.scanner-line {
-  position: absolute;
-
-  left: 8px;
-  right: 8px;
-
-  height: 1px;
-
-  background: #24221e;
-
-  animation: scannerLine 2.3s ease-in-out infinite;
-}
-
-.scanner-tag {
-  position: absolute;
-
-  right: 13px;
-  bottom: 12px;
-
-  color: #99948b;
-
-  font-size: 7px;
-
-  letter-spacing: 0.12em;
-}
-
-/* =========================================================
-   DIGITAL CLOSET
-   ========================================================= */
-
-.closet-visual {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 8px;
-}
-
-.mini-clothing-card {
-  width: 78px;
-  height: 82px;
-
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 5px;
-
-  border-radius: 11px;
-
-  background: white;
-
-  border: 1px solid #e3dfd7;
-
-  box-shadow:
-    0 8px 20px rgba(30,27,21,0.05);
-
-  transform: translateY(0);
-
-  transition:
-    transform 0.4s ease;
-}
-
-.mini-clothing-card span {
-  font-size: 28px;
-}
-
-.mini-clothing-card small {
-  color: #9b968d;
-
-  font-size: 7px;
-
-  letter-spacing: 0.1em;
-}
-
-.sb-feature-card:hover
-.mini-clothing-card:nth-child(1) {
-  transform: translateY(-8px) rotate(-3deg);
-}
-
-.sb-feature-card:hover
-.mini-clothing-card:nth-child(2) {
-  transform: translateY(4px);
-}
-
-.sb-feature-card:hover
-.mini-clothing-card:nth-child(3) {
-  transform: translateY(-5px) rotate(3deg);
-}
-
-/* =========================================================
-   CHAT
-   ========================================================= */
-
-.chat-visual {
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  gap: 8px;
-
-  padding: 16px;
-}
-
-.mini-chat {
-  width: fit-content;
-
-  max-width: 75%;
-
-  padding: 8px 11px;
-
-  border-radius: 9px;
-
-  font-size: 8px;
-
-  line-height: 1.4;
-}
-
-.user-chat {
-  align-self: flex-end;
-
-  color: #3a3833;
-
-  background: white;
-
-  border: 1px solid #e3dfd7;
-
-  border-radius: 9px 9px 2px 9px;
-}
-
-.ai-chat {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-
-  color: white;
-
-  background: #171613;
-
-  border-radius: 9px 9px 9px 2px;
-
-  animation: chatPulse 3s ease-in-out infinite;
-}
-
-/* =========================================================
-   WEATHER
-   ========================================================= */
-
-.weather-visual {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 17px;
-}
-
-.weather-circle {
-  width: 65px;
-  height: 65px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  color: #3f3c35;
-
-  background: white;
-
-  border: 1px solid #e2ded6;
-
-  animation:
-    weatherFloat 4s ease-in-out infinite;
-}
-
-.weather-temperature strong {
-  display: block;
-
-  color: #27251f;
-
-  font-family: Georgia, serif;
-
-  font-size: 27px;
-
-  font-weight: 400;
-}
-
-.weather-temperature span {
-  display: block;
-
-  margin-top: 2px;
-
-  color: #969188;
-
-  font-size: 8px;
-}
-
-/* =========================================================
-   PERSONALIZATION
-   ========================================================= */
-
-.preference-visual {
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  gap: 9px;
-
-  padding: 18px 25px;
-}
-
-.preference-row {
-  display: flex;
-  align-items: center;
-
-  justify-content: space-between;
-
-  color: #7e7970;
-
-  font-size: 9px;
-}
-
-.preference-row i {
-  width: 34px;
-  height: 18px;
-
-  position: relative;
-
-  border-radius: 20px;
-
-  background: #dfdcd4;
-}
-
-.preference-row i::after {
-  content: "";
-
-  position: absolute;
-
-  width: 12px;
-  height: 12px;
-
-  top: 3px;
-  left: 3px;
-
-  border-radius: 50%;
-
-  background: white;
-
-  transition:
-    transform 0.3s ease;
-}
-
-.preference-row .preference-active {
-  background: #22211d;
-}
-
-.preference-row .preference-active::after {
-  transform: translateX(16px);
-}
-
-.sb-feature-card:hover
-.preference-row:nth-child(3) i::after {
-  transform: translateX(16px);
-}
-
-/* =========================================================
-   SHOPPING
-   ========================================================= */
-
-.shopping-visual {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  padding: 14px;
-}
-
-.shopping-product {
-  width: 100%;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  padding: 10px;
-
-  border-radius: 10px;
-
-  background: white;
-
-  border: 1px solid #e3dfd7;
-
-  box-shadow:
-    0 8px 22px rgba(30,27,21,0.05);
-
-  transition:
-    transform 0.35s ease;
-}
-
-.sb-feature-card:hover
-.shopping-product {
-  transform: translateX(5px);
-}
-
-.product-image {
-  width: 42px;
-  height: 42px;
-
-  flex-shrink: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 8px;
-
-  background: #f1efe9;
-
-  font-size: 22px;
-}
-
-.shopping-product > div:nth-child(2) {
-  flex: 1;
-}
-
-.shopping-product small {
-  display: block;
-
-  color: #aaa59b;
-
-  font-size: 6px;
-
-  letter-spacing: 0.12em;
-}
-
-.shopping-product strong {
-  display: block;
-
-  margin-top: 3px;
-
-  color: #3a3833;
-
-  font-size: 9px;
-}
-
-.shopping-product > svg {
-  color: #817c73;
-}
-
-/* =========================================================
-   CARD SPECIFIC HOVER
-   ========================================================= */
-
-.sb-feature-scanner:hover {
-  background:
-    linear-gradient(
-      145deg,
-      #fff,
-      #faf9f6
-    );
-}
-
-.sb-feature-closet:hover {
-  background:
-    linear-gradient(
-      145deg,
-      #fff,
-      #f9f8f4
-    );
-}
-
-.sb-feature-stylist:hover {
-  background:
-    linear-gradient(
-      145deg,
-      #fff,
-      #f8f7f4
-    );
-}
-
-.sb-feature-weather:hover {
-  background:
-    linear-gradient(
-      145deg,
-      #fff,
-      #faf9f5
-    );
-}
-
-/* =========================================================
-   ANIMATIONS
-   ========================================================= */
-
-@keyframes sbFeatureReveal {
-  from {
-    opacity: 0;
-
-    transform:
-      translateY(25px);
-  }
-
-  to {
-    opacity: 1;
-
-    transform:
-      translateY(0);
-  }
-}
-
-@keyframes scannerLine {
-  0%,
-  100% {
-    top: 14px;
-    opacity: 0.4;
-  }
-
-  50% {
-    top: 62px;
-    opacity: 1;
-  }
-}
-
-@keyframes scannerPulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.04);
-  }
-}
-
-@keyframes chatPulse {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  50% {
-    transform: translateX(5px);
-  }
-}
-
-@keyframes weatherFloat {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-7px);
-  }
-}
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 950px) {
-
-  .sb-feature-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-  }
-
-}
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-  .sb-feature-grid {
-    grid-template-columns: 1fr;
-
-    gap: 12px;
-
-    margin-top: 40px;
-  }
-
-  .sb-feature-card {
-    min-height: 400px;
-  }
-
-  .sb-features-intro p {
-    font-size: 13px;
-  }
-
-}
-
-
-/* =========================================================
-   SCROLL STORYTELLING — HOW IT WORKS
-   ========================================================= */
-.sb-how-section{position:relative;height:330vh;background:#f7f6f2}.sb-how-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:70px 7vw 45px;box-sizing:border-box}.sb-how-header{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:42px}.sb-how-header h2{margin:10px 0 0;color:#11110f;font-size:clamp(42px,5vw,70px);line-height:.95;letter-spacing:-.055em}.sb-how-header h2 em{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-style:italic}.sb-how-progress{display:flex;align-items:center;gap:10px;min-width:190px;margin-bottom:6px;color:#aaa59b;font-size:8px;letter-spacing:.12em}.sb-how-progress>div{width:120px;height:1px;overflow:hidden;background:#d9d5cd}.sb-how-progress i{display:block;height:100%;background:#1b1a17}.sb-how-viewport{width:100%;overflow:visible}.sb-how-track{display:flex;gap:18px;width:max-content;will-change:transform;transition:transform 1.15s cubic-bezier(.22,.8,.22,1)}.sb-how-card{position:relative;flex:0 0 min(58vw,760px);min-height:390px;padding:26px;border-radius:20px;background:#fff;border:1px solid #e3dfd7;box-sizing:border-box;opacity:.45;transform:scale(.94);transition:opacity .45s ease,transform .55s cubic-bezier(.2,.8,.2,1),box-shadow .45s ease;overflow:hidden}.sb-how-card.active{opacity:1;transform:scale(1);box-shadow:0 25px 65px rgba(34,30,24,.09)}.sb-how-number{display:block;color:#aaa59b;font-size:9px;letter-spacing:.15em}.sb-how-card-main{height:100%;display:flex;flex-direction:column;justify-content:space-between;gap:28px;padding-top:18px}.sb-how-card h3{margin:0;color:#171613;font-size:clamp(22px,2vw,30px);letter-spacing:-.035em}.sb-how-card p{max-width:500px;margin:9px 0 0;color:#817c73;font-size:14px;line-height:1.7}.sb-how-visual{position:relative;height:205px;border-radius:15px;background:#f5f3ed;border:1px solid #e4e0d8;overflow:hidden}.scanner-how{display:flex;align-items:center;justify-content:center}.how-scan-frame{position:relative;width:110px;height:110px;display:flex;align-items:center;justify-content:center;color:#39362f;border:1px solid #cfcac0;border-radius:22px}.how-scan-frame:before,.how-scan-frame:after{content:"";position:absolute;width:22px;height:22px;border-color:#24221e;border-style:solid}.how-scan-frame:before{top:9px;left:9px;border-width:1px 0 0 1px}.how-scan-frame:after{right:9px;bottom:9px;border-width:0 1px 1px 0}.how-scan-frame span{position:absolute;left:10px;right:10px;height:1px;background:#22211e;animation:howScanner 2.5s ease-in-out infinite}.scanner-how small{position:absolute;right:15px;bottom:14px;color:#9b968d;font-size:7px;letter-spacing:.14em}.ai-how{display:flex;align-items:center;justify-content:center}.ai-orbit{width:100px;height:100px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:#292721;border:1px solid #d1cdc4;box-shadow:0 0 0 16px rgba(220,216,207,.35),0 0 0 32px rgba(220,216,207,.16);animation:howOrbit 4s ease-in-out infinite}.ai-pills{position:absolute;display:flex;gap:7px;bottom:18px}.ai-pills span{padding:6px 8px;border-radius:7px;color:#89847b;background:#fff;border:1px solid #e2ded6;font-size:7px;letter-spacing:.08em}.closet-how{display:flex;align-items:center;justify-content:center;gap:9px}.how-mini-item{width:105px;height:110px;display:flex;align-items:center;justify-content:center;border-radius:13px;color:#454139;background:#fff;border:1px solid #e1ddd5;box-shadow:0 10px 25px rgba(30,27,21,.05);transition:transform .5s ease;font-size:11px;letter-spacing:.1em}.sb-how-card:hover .how-mini-item:nth-child(1){transform:translateY(-10px) rotate(-4deg)}.sb-how-card:hover .how-mini-item:nth-child(2){transform:translateY(5px)}.sb-how-card:hover .how-mini-item:nth-child(3){transform:translateY(-7px) rotate(4deg)}.chat-how{display:flex;flex-direction:column;justify-content:center;gap:12px;padding:25px;box-sizing:border-box}.how-chat-bubble{width:fit-content;max-width:70%;padding:11px 14px;border-radius:12px;font-size:10px;line-height:1.4}.how-chat-bubble.user{align-self:flex-end;color:#3b3832;background:#fff;border:1px solid #e0dcd4;border-radius:12px 12px 3px 12px}.how-chat-bubble.ai{display:flex;align-items:center;gap:6px;color:#fff;background:#181713;border-radius:12px 12px 12px 3px;animation:howChatMove 3s ease-in-out infinite}.outfit-how{display:flex;align-items:center;justify-content:center;gap:10px}.outfit-how>div{width:105px;height:115px;display:flex;align-items:center;justify-content:center;border-radius:14px;color:#3d3931;background:#fff;border:1px solid #e0dcd4;box-shadow:0 10px 25px rgba(30,27,21,.05);transition:transform .45s ease}.outfit-how>div:nth-child(2){font-size:10px;letter-spacing:.12em}.sb-how-card:hover .outfit-how>div:nth-child(1){transform:translateY(-12px) rotate(-4deg)}.sb-how-card:hover .outfit-how>div:nth-child(2){transform:translateY(4px)}.sb-how-card:hover .outfit-how>div:nth-child(3){transform:translateY(-8px) rotate(4deg)}.how-match{position:absolute;right:20px;top:20px;padding:8px 10px;border-radius:8px;color:#fff;background:#171613;font-family:Georgia,serif;font-size:15px;font-style:italic}.sb-how-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:28px;color:#8f8a81;font-size:10px;letter-spacing:.04em}.sb-how-dots{display:flex;align-items:center;gap:6px}.sb-how-dots span{width:5px;height:5px;border-radius:50%;background:#d1cdc4;transition:width .3s ease,background .3s ease}.sb-how-dots span.active{width:18px;border-radius:10px;background:#292721}@keyframes howScanner{0%,100%{top:18px}50%{top:87px}}@keyframes howOrbit{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}@keyframes howChatMove{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
-@media(max-width:850px){.sb-how-section{height:auto}.sb-how-sticky{position:relative;height:auto;padding:70px 25px;overflow:visible}.sb-how-header{flex-direction:column;align-items:flex-start}.sb-how-progress{display:none}.sb-how-viewport{overflow:hidden}.sb-how-track{width:100%;flex-direction:column;transform:none!important}.sb-how-card{flex-basis:auto;width:100%;min-height:360px;opacity:1;transform:none}.sb-how-bottom{display:none}}@media(max-width:600px){.sb-how-sticky{padding:60px 18px}.sb-how-header h2{font-size:42px}.sb-how-card{padding:20px}.sb-how-visual{height:175px}}
-
-      `}</style>
-
-      {/* =====================================================
-          SCROLL STORYTELLING — HOW IT WORKS
-          ===================================================== */}
-
-      <section id="how" ref={howSectionRef} className="sb-how-section">
-        <div className="sb-how-sticky">
-          <div className="sb-how-header">
+        </section>
+
+        {/* FAQ */}
+        <section id="faq" className="sb-section" style={{ paddingTop: 0 }}>
+          <div className="sb-section-head sb-reveal" style={{ maxWidth: 860 }}>
             <div>
-              <div className="eyebrow">HOW IT WORKS</div>
-              <h2>From wardrobe to <em>what to wear.</em></h2>
-            </div>
-            <div className="sb-how-progress">
-              <span>0{Math.min(Math.floor(howProgress * 5) + 1, 5)}</span>
-              <div><i style={{ width: `${Math.max(howProgress * 100, 4)}%` }} /></div>
-              <span>05</span>
+              <div className="sb-section-kicker">Good to know</div>
+              <h2>
+                Questions, <em>answered.</em>
+              </h2>
             </div>
           </div>
 
-          <div className="sb-how-viewport" ref={howViewportRef}>
-            <div className="sb-how-track" ref={howTrackRef} style={{ transform: `translate3d(-${howProgress * howDistance}px, 0, 0)` }}>
-              <article className={`sb-how-card ${howProgress < 0.2 ? "active" : ""}`}>
-                <span className="sb-how-number">01</span>
-                <div className="sb-how-card-main">
-                  <div className="sb-how-visual scanner-how"><div className="how-scan-frame"><ScanFace size={34} /><span /></div><small>SCANNING YOUR CLOSET</small></div>
-                  <div><h3>Upload your clothes</h3><p>Add photos from your gallery or camera.</p></div>
-                </div>
-              </article>
+          <div className="sb-faq sb-reveal">
+            {faqs.map(([question, answer]) => (
+              <details key={question}>
+                <summary>
+                  {question}
+                  <Plus size={18} />
+                </summary>
+                <p>{answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
 
-              <article className={`sb-how-card ${howProgress >= 0.15 && howProgress < 0.4 ? "active" : ""}`}>
-                <span className="sb-how-number">02</span>
-                <div className="sb-how-card-main">
-                  <div className="sb-how-visual ai-how"><div className="ai-orbit"><Sparkles size={28} /></div><div className="ai-pills"><span>COLOR</span><span>FABRIC</span><span>STYLE</span></div></div>
-                  <div><h3>AI understands them</h3><p>Attributes are identified automatically.</p></div>
-                </div>
-              </article>
-
-              <article className={`sb-how-card ${howProgress >= 0.35 && howProgress < 0.6 ? "active" : ""}`}>
-                <span className="sb-how-number">03</span>
-                <div className="sb-how-card-main">
-                  <div className="sb-how-visual closet-how"><div className="how-mini-item"><Shirt size={30} /></div><div className="how-mini-item"><span>DENIM</span></div><div className="how-mini-item"><Heart size={27} /></div></div>
-                  <div><h3>Build your digital closet</h3><p>Your wardrobe becomes searchable and useful.</p></div>
-                </div>
-              </article>
-
-              <article className={`sb-how-card ${howProgress >= 0.55 && howProgress < 0.8 ? "active" : ""}`}>
-                <span className="sb-how-number">04</span>
-                <div className="sb-how-card-main">
-                  <div className="sb-how-visual chat-how"><div className="how-chat-bubble user">What should I wear?</div><div className="how-chat-bubble ai"><Sparkles size={11} /> Checking your closet...</div></div>
-                  <div><h3>Tell StyleBuddy what you need</h3><p>Ask naturally about an occasion, item or mood.</p></div>
-                </div>
-              </article>
-
-              <article className={`sb-how-card ${howProgress >= 0.75 ? "active" : ""}`}>
-                <span className="sb-how-number">05</span>
-                <div className="sb-how-card-main">
-                  <div className="sb-how-visual outfit-how"><div><Shirt size={28} /></div><div><span>DENIM</span></div><div><ShoppingBag size={27} /></div><span className="how-match">94%</span></div>
-                  <div><h3>Get a personalised outfit</h3><p>Get a look grounded in your closet and preferences.</p></div>
-                </div>
-              </article>
+        {/* FINAL CTA */}
+        <section className="sb-cta">
+          <div className="sb-cta-content sb-reveal">
+            <div className="sb-cta-kicker">
+              Your wardrobe, with a little more intelligence
             </div>
+
+            <h2>
+              Make every outfit
+              <br />
+              <em>feel intentional.</em>
+            </h2>
+
+            <p>
+              Start with the clothes you already own. Let StyleBuddy help
+              with the rest.
+            </p>
+
+            <Link to="/register" className="sb-button-light">
+              Create your closet <ArrowRight size={16} />
+            </Link>
           </div>
-
-          <div className="sb-how-bottom">
-            <span>{howProgress < 0.2 && "Turn your wardrobe into data."}{howProgress >= 0.2 && howProgress < 0.4 && "StyleBuddy learns what you own."}{howProgress >= 0.4 && howProgress < 0.6 && "Everything you own, in one place."}{howProgress >= 0.6 && howProgress < 0.8 && "Just tell StyleBuddy what you need."}{howProgress >= 0.8 && "Your wardrobe. Your next outfit."}</span>
-            <div className="sb-how-dots">{[0,1,2,3,4].map((dot) => <span key={dot} className={howProgress >= dot/5 && howProgress < (dot+1)/5 ? "active" : ""} />)}</div>
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================
-          EXISTING FEATURES
-          ===================================================== */}
-
-      <section
-  id="features"
-  className="section features-section sb-features"
->
-  <div className="section-intro sb-features-intro">
-    <div className="eyebrow">
-      THE STYLEBUDDY SYSTEM
-    </div>
-
-    <h2>
-      One closet. <em>Many possibilities.</em>
-    </h2>
-
-    <p>
-      Everything StyleBuddy does works together to turn your
-      wardrobe into something you can actually use.
-    </p>
-  </div>
-
-  <div className="sb-feature-grid">
-
-    {/* ================= CARD 01 ================= */}
-
-    <div className="sb-feature-card sb-feature-scanner">
-
-      <div className="sb-feature-top">
-        <span className="sb-feature-number">
-          01
-        </span>
-
-        <span className="sb-feature-arrow">
-          <ArrowRight size={16} />
-        </span>
-      </div>
-
-      <div className="sb-feature-icon">
-        <ScanFace size={23} />
-      </div>
-
-      <div className="sb-feature-content">
-        <h3>AI Clothing Scanner</h3>
-
-        <p>
-          Turn everyday clothing photos into structured
-          digital wardrobe items.
-        </p>
-      </div>
-
-      <div className="sb-feature-visual scanner-visual">
-        <div className="scanner-frame">
-          <ScanFace size={28} />
-
-          <span className="scanner-line" />
-        </div>
-
-        <span className="scanner-tag">
-          AI ANALYSING
-        </span>
-      </div>
-
-    </div>
-
-
-    {/* ================= CARD 02 ================= */}
-
-    <div className="sb-feature-card sb-feature-closet">
-
-      <div className="sb-feature-top">
-        <span className="sb-feature-number">
-          02
-        </span>
-
-        <span className="sb-feature-arrow">
-          <ArrowRight size={16} />
-        </span>
-      </div>
-
-      <div className="sb-feature-icon">
-        <Shirt size={23} />
-      </div>
-
-      <div className="sb-feature-content">
-        <h3>Digital Closet</h3>
-
-        <p>
-          Search, filter and understand everything
-          you already own.
-        </p>
-      </div>
-
-      <div className="sb-feature-visual closet-visual">
-
-        <div className="mini-clothing-card">
-          <span>👕</span>
-          <small>TOP</small>
-        </div>
-
-        <div className="mini-clothing-card mini-card-offset">
-          <span>👖</span>
-          <small>BOTTOM</small>
-        </div>
-
-        <div className="mini-clothing-card">
-          <span>👟</span>
-          <small>SHOES</small>
-        </div>
-
-      </div>
-
-    </div>
-
-
-    {/* ================= CARD 03 ================= */}
-
-    <div className="sb-feature-card sb-feature-stylist">
-
-      <div className="sb-feature-top">
-        <span className="sb-feature-number">
-          03
-        </span>
-
-        <span className="sb-feature-arrow">
-          <ArrowRight size={16} />
-        </span>
-      </div>
-
-      <div className="sb-feature-icon">
-        <MessageCircle size={23} />
-      </div>
-
-      <div className="sb-feature-content">
-        <h3>AI Personal Stylist</h3>
-
-        <p>
-          Have a natural conversation with a stylist
-          that knows your closet.
-        </p>
-      </div>
-
-      <div className="sb-feature-visual chat-visual">
-
-        <div className="mini-chat user-chat">
-          What should I wear?
-        </div>
-
-        <div className="mini-chat ai-chat">
-          <Sparkles size={11} />
-          Let me check your closet...
-        </div>
-
-      </div>
-
-    </div>
-
-
-    {/* ================= CARD 04 ================= */}
-
-    <div className="sb-feature-card sb-feature-weather">
-
-      <div className="sb-feature-top">
-        <span className="sb-feature-number">
-          04
-        </span>
-
-        <span className="sb-feature-arrow">
-          <ArrowRight size={16} />
-        </span>
-      </div>
-
-      <div className="sb-feature-icon">
-        <CloudSun size={23} />
-      </div>
-
-      <div className="sb-feature-content">
-        <h3>Weather-Aware Styling</h3>
-
-        <p>
-          Bring temperature and conditions into
-          every recommendation.
-        </p>
-      </div>
-
-      <div className="sb-feature-visual weather-visual">
-
-        <div className="weather-circle">
-          <CloudSun size={27} />
-        </div>
-
-        <div className="weather-temperature">
-          <strong>28°</strong>
-          <span>Light layers</span>
-        </div>
-
-      </div>
-
-    </div>
-
-
-    {/* ================= CARD 05 ================= */}
-
-    <div className="sb-feature-card sb-feature-personalization">
-
-      <div className="sb-feature-top">
-        <span className="sb-feature-number">
-          05
-        </span>
-
-        <span className="sb-feature-arrow">
-          <ArrowRight size={16} />
-        </span>
-      </div>
-
-      <div className="sb-feature-icon">
-        <SlidersHorizontal size={23} />
-      </div>
-
-      <div className="sb-feature-content">
-        <h3>Personalization</h3>
-
-        <p>
-          Style around your preferences, colors,
-          fit and occasions.
-        </p>
-      </div>
-
-      <div className="sb-feature-visual preference-visual">
-
-        <div className="preference-row">
-          <span>Casual</span>
-          <i className="preference-active" />
-        </div>
-
-        <div className="preference-row">
-          <span>Minimal</span>
-          <i className="preference-active" />
-        </div>
-
-        <div className="preference-row">
-          <span>Smart casual</span>
-          <i />
-        </div>
-
-      </div>
-
-    </div>
-
-
-    {/* ================= CARD 06 ================= */}
-
-    <div className="sb-feature-card sb-feature-shopping">
-
-      <div className="sb-feature-top">
-        <span className="sb-feature-number">
-          06
-        </span>
-
-        <span className="sb-feature-arrow">
-          <ArrowRight size={16} />
-        </span>
-      </div>
-
-      <div className="sb-feature-icon">
-        <ShoppingBag size={23} />
-      </div>
-
-      <div className="sb-feature-content">
-        <h3>Shopping Assistant</h3>
-
-        <p>
-          Complete the look only when your wardrobe
-          genuinely needs something.
-        </p>
-      </div>
-
-      <div className="sb-feature-visual shopping-visual">
-
-        <div className="shopping-product">
-          <div className="product-image">
-            👟
-          </div>
-
-          <div>
-            <small>STYLEBUDDY FOUND</small>
-            <strong>Missing piece</strong>
-          </div>
-
-          <ArrowRight size={14} />
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-      {/* =====================================================
-          EXISTING CTA
-          ===================================================== */}
-
-      <section className="final-cta">
-        <div>
-          <div className="eyebrow">
-            YOUR NEXT OUTFIT STARTS HERE
-          </div>
-
-          <h2>
-            Build your digital wardrobe today.
-          </h2>
-
-          <p>
-            Make getting dressed the easiest part of your day.
-          </p>
-
-          <Link
-            to="/register"
-            className="btn btn-light"
-          >
-            Get started <ArrowRight size={17} />
-          </Link>
-        </div>
-      </section>
-
-      {/* =====================================================
-          EXISTING FOOTER
-          ===================================================== */}
-
-      <footer>
-        <div className="brand">
-          <span className="brand-mark">
-            <Sparkles size={15} />
+        </section>
+      </main>
+
+      {/* FOOTER */}
+      <footer className="sb-footer">
+        <Link to="/" className="sb-brand">
+          <span className="sb-brand-mark">
+            <Sparkles size={14} />
           </span>
-
           StyleBuddy
-        </div>
+        </Link>
 
-        <span>AI Fashion Closet</span>
-
+        <span>AI fashion closet · Your style, made personal</span>
         <span>© 2026 StyleBuddy</span>
       </footer>
     </div>
