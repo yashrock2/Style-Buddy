@@ -10,6 +10,13 @@ const transporter = nodemailer.createTransport({
     pass: env.smtpPassword,
   },
 });
+console.log("SMTP configuration status:", {
+  hostConfigured: Boolean(env.smtpHost),
+  port: env.smtpPort,
+  userConfigured: Boolean(env.smtpUser),
+  passwordConfigured: Boolean(env.smtpPassword),
+  fromConfigured: Boolean(env.smtpFrom),
+});
 
 export async function sendTestEmail(to) {
   const info = await transporter.sendMail({
