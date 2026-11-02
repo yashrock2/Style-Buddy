@@ -18,6 +18,14 @@ console.log("SMTP configuration status:", {
   fromConfigured: Boolean(env.smtpFrom),
 });
 
+transporter.verify()
+  .then(() => {
+    console.log("SMTP connection successful!");
+  })
+  .catch((error) => {
+    console.error("SMTP connection failed:", error.message);
+  });
+
 export async function sendTestEmail(to) {
   const info = await transporter.sendMail({
     from: env.smtpFrom,
