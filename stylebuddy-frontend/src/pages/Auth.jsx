@@ -333,33 +333,148 @@ function AuthLayout({ children }) {
         @keyframes authPop { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-6px) scale(1.12); } }
         @keyframes authShake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
 
-        /* ============ RESPONSIVE ============ */
-        @media (max-width: 1000px) {
-          .auth-card.c3 { display: none; }
-        }
+       
+/* ============ RESPONSIVE ============ */
 
-        @media (max-width: 800px) {
-          .auth-page { grid-template-columns: 1fr; }
-          .auth-page .auth-side { min-height: 0; height: 330px; }
-          .auth-card.c2,.auth-card.c3,.auth-caption { display: none; }
-          .auth-card.c1 { top: auto; bottom: 6%; left: 5%; transform: scale(.86); transform-origin: left bottom; }
-          .auth-brand { top: 18px; left: 18px; }
-          .auth-word { font-size: 42vw; }
+@media (max-width: 1000px) {
+  .auth-card.c3 {
+    display: none;
+  }
+}
 
-          .auth-page .auth-main { padding: 28px 18px calc(40px + env(safe-area-inset-bottom)); align-items: flex-start; }
-          .auth-page .auth-form { max-width: none; }
-          .auth-page h1 { font-size: 32px; }
-          .auth-page .auth-sub { font-size: 14px; margin-bottom: 22px; }
+@media (max-width: 800px) {
+  .auth-page {
+    grid-template-columns: 1fr;
+  }
 
-          /* 16px stops iPhones from zooming in when an input is tapped */
-          .auth-page .input-wrap input { font-size: 16px; height: 54px; }
-          .auth-page .requirements span { font-size: 11.5px; padding: 6px 10px; }
-        }
+  .auth-page .auth-side {
+    min-height: 0;
+    height: 390px;
+  }
 
-        @media (max-width: 520px) {
-          .auth-page .auth-side { height: 290px; }
-          .auth-card.c1 { display: none; }
-        }
+  /* Keep both feature cards visible */
+  .auth-card.c1 {
+    display: flex;
+    top: 23%;
+    bottom: auto;
+    left: 4%;
+    transform: scale(.82);
+    transform-origin: left center;
+    animation: authFloat 5s ease-in-out infinite;
+  }
+
+  .auth-card.c2 {
+    display: flex;
+    top: auto;
+    bottom: 22%;
+    right: 3%;
+    transform: scale(.82);
+    transform-origin: right center;
+    animation: authFloat 6s .8s ease-in-out infinite;
+  }
+
+  /* Show the brand and promotional caption */
+  .auth-caption {
+    display: block;
+    left: 18px;
+    right: 18px;
+    bottom: 12px;
+    text-align: center;
+  }
+
+  .auth-caption h2 {
+    font-size: 25px;
+  }
+
+  .auth-caption p {
+    font-size: 12px;
+  }
+
+  .auth-swatches {
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .auth-swatches span {
+    width: 23px;
+    height: 23px;
+  }
+
+  .auth-brand {
+    top: 18px;
+    left: 18px;
+  }
+
+  .auth-word {
+    font-size: 42vw;
+  }
+
+  .auth-page .auth-main {
+    padding: 28px 18px calc(40px + env(safe-area-inset-bottom));
+    align-items: flex-start;
+  }
+
+  .auth-page .auth-form {
+    max-width: none;
+  }
+
+  .auth-page h1 {
+    font-size: 32px;
+  }
+
+  .auth-page .auth-sub {
+    font-size: 14px;
+    margin-bottom: 22px;
+  }
+
+  .auth-page .input-wrap input {
+    font-size: 16px;
+    height: 54px;
+  }
+
+  .auth-page .requirements span {
+    font-size: 11.5px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 520px) {
+  .auth-page .auth-side {
+    height: 390px;
+  }
+
+  .auth-card.c1 {
+    display: flex;
+  }
+
+  .auth-card.c2 {
+    display: flex;
+  }
+
+  .auth-caption {
+    display: block;
+  }
+
+  .auth-card {
+    padding: 9px 11px;
+    gap: 8px;
+    border-radius: 13px;
+  }
+
+  .auth-card-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .auth-card small {
+    font-size: 9px;
+  }
+
+  .auth-card strong {
+    font-size: 11px;
+  }
+}
+
 
         @media (hover: none) {
           .auth-page .btn-dark:hover:not(:disabled),
