@@ -498,10 +498,10 @@ export default function Landing() {
         .sb-feature-meta { position: absolute; top: 26px; left: 28px; right: 28px; display: flex; justify-content: space-between; color: #aaa396; font-size: 12px; }
         .sb-feature-icon { position: absolute; top: 56px; left: 28px; width: 54px; height: 54px; display: grid; place-items: center; border-radius: 16px; color: var(--ink); background: var(--cream); transition: transform .45s, background .45s; }
         .sb-feature-card:hover .sb-feature-icon { transform: rotate(-10deg) scale(1.12); background: #fff; }
-        .sb-feature-card h3 { position: relative; margin: 0 0 9px; font-size: 25px; letter-spacing: -.04em; }
-        .sb-feature-card p { position: relative; max-width: 340px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; transition: color .45s; }
+        .sb-feature-card h3 { position: relative; z-index: 2; margin: 0 0 9px; font-size: 25px; letter-spacing: -.04em; }
+        .sb-feature-card p { position: relative; z-index: 2; max-width: 340px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; transition: color .45s; }
         .sb-feature-card:hover p { color: #cfcabd; }
-        .sb-feature-watermark { position: absolute; right: 22px; bottom: 16px; color: #f1efe9; transform: rotate(-12deg); transition: transform .6s, color .6s; }
+        .sb-feature-watermark { position: absolute; z-index: 0; pointer-events: none; right: 22px; bottom: 16px; color: #f1efe9; transform: rotate(-12deg); transition: transform .6s, color .6s; }
         .sb-feature-card:hover .sb-feature-watermark { transform: rotate(8deg) scale(1.2); color: rgba(255,255,255,.07); }
 
         /* DASHBOARD PREVIEW */
@@ -699,6 +699,11 @@ export default function Landing() {
           .sb-feature-meta { top: 22px; left: 22px; right: 22px; }
           .sb-feature-icon { top: 50px; left: 22px; width: 48px; height: 48px; }
           .sb-feature-card h3 { font-size: 22px; }
+
+          /* layers drawing: moved to the empty top-right corner so it never overlaps the text */
+          .sb-feature-watermark { top: 54px; right: 22px; bottom: auto; transform: rotate(-12deg); color: rgba(141,128,108,.35); }
+          .sb-feature-watermark svg { width: 58px; height: 58px; }
+          .sb-feature-card:hover .sb-feature-watermark { transform: rotate(-12deg); color: rgba(141,128,108,.35); }
 
           /* dashboard preview */
           .sb-preview { transform: none; grid-template-columns: 1fr; min-height: 0; border-radius: 22px; }
