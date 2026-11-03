@@ -139,11 +139,79 @@ const faqs = [
   ],
 ];
 
+// True on phone-sized screens (same breakpoint as the phone CSS: 650px)
+function useIsPhone(query = "(max-width: 650px)") {
+  const [isPhone, setIsPhone] = useState(
+    () => typeof window !== "undefined" && window.matchMedia(query).matches
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const onChange = (e) => setIsPhone(e.matches);
+    setIsPhone(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, [query]);
+
+  return isPhone;
+}
+
+// Phone-only hero visual: a swinging closet rail with a scanning beam
+function MobileCloset({ look, isBuilding }) {
+  const pieces = [
+    { Icon: Shirt, label: look.items[0] },
+    { Icon: Layers3, label: look.items[1] },
+    { Icon: ShoppingBag, label: look.items[2] },
+  ];
+
+  return (
+    <div className="sb-m-closet" aria-label="Your digital closet preview">
+      <div className="sb-m-rail" />
+
+      <div className="sb-m-hangers">
+        {pieces.map(({ Icon, label }, i) => (
+          <div className="sb-m-hanger" style={{ "--i": i }} key={i}>
+            <span className="sb-m-hook" />
+            <div
+              className="sb-m-garment"
+              style={{ background: look.colors[i] }}
+            >
+              <span className="sb-m-icon">
+                <Icon size={18} />
+              </span>
+            </div>
+            <small>{label}</small>
+          </div>
+        ))}
+      </div>
+
+      <span className="sb-m-scan" />
+
+      <div className="sb-m-chips">
+        <span className="sb-m-chip">
+          <CloudSun size={14} /> {look.temperature}C today
+        </span>
+        <span className="sb-m-chip">
+          <Heart size={14} /> {look.match} match
+        </span>
+      </div>
+
+      <div className="sb-m-status">
+        <i />
+        {isBuilding
+          ? "Scanning your wardrobe…"
+          : `${look.items[0]} added to your closet`}
+      </div>
+    </div>
+  );
+}
+
 export default function Landing() {
   const [lookIndex, setLookIndex] = useState(0);
   const [isBuilding, setIsBuilding] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
   const currentLook = looks[lookIndex];
+  const isPhone = useIsPhone();
 
   // Scroll reveal animations
   useEffect(() => {
@@ -536,6 +604,28 @@ export default function Landing() {
         .sb-footer .sb-brand { color: #f6f3ec; font-size: 17px; }
         .sb-footer .sb-brand-mark { color: var(--ink); background: #f4f0e7; }
 
+        /* PHONE-ONLY HERO VISUAL */
+        .sb-m-closet { position: relative; z-index: 3; width: 100%; min-height: 360px; padding-bottom: 18px; display: flex; flex-direction: column; align-items: center; }
+        .sb-m-rail { position: relative; width: 88%; height: 6px; margin-top: 30px; border-radius: 6px; background: linear-gradient(90deg, #cfc8b8, #8d806c, #cfc8b8); box-shadow: 0 6px 14px rgba(48,42,32,.18); }
+        .sb-m-rail:before,.sb-m-rail:after { content: ""; position: absolute; top: -2px; width: 10px; height: 10px; border-radius: 50%; background: var(--ink); }
+        .sb-m-rail:before { left: -4px; }
+        .sb-m-rail:after { right: -4px; }
+        .sb-m-hangers { width: 88%; display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+        .sb-m-hanger { display: flex; flex-direction: column; align-items: center; transform-origin: 50% 0; animation: sbSwing 5s ease-in-out infinite; animation-delay: calc(var(--i) * -1.3s); }
+        .sb-m-hook { width: 2px; height: 22px; background: var(--taupe); }
+        .sb-m-garment { position: relative; width: 100%; aspect-ratio: .78; display: grid; place-items: center; overflow: hidden; border: 1px solid rgba(0,0,0,.07); border-radius: 16px 16px 14px 14px; box-shadow: 0 16px 30px rgba(48,42,32,.14); transition: background .6s ease; }
+        .sb-m-garment:before { content: ""; position: absolute; inset: 7px; border: 1px dashed rgba(255,255,255,.6); border-radius: 11px; }
+        .sb-m-icon { position: relative; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; color: var(--ink); background: rgba(255,255,255,.88); }
+        .sb-m-hanger small { width: 100%; margin-top: 9px; overflow: hidden; text-align: center; color: #77736b; font-size: 11px; white-space: nowrap; text-overflow: ellipsis; }
+        .sb-m-scan { position: absolute; z-index: 4; top: 36px; left: 7%; width: 2px; height: 215px; border-radius: 2px; pointer-events: none; background: linear-gradient(transparent, var(--sage), transparent); box-shadow: 0 0 16px 4px rgba(131,145,116,.35); animation: sbScanX 4.5s ease-in-out infinite; }
+        .sb-m-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 24px; }
+        .sb-m-chip { display: inline-flex; align-items: center; gap: 7px; padding: 9px 13px; border: 1px solid rgba(255,255,255,.9); border-radius: 999px; background: rgba(255,255,255,.85); backdrop-filter: blur(10px); box-shadow: 0 10px 28px rgba(48,42,32,.1); color: var(--ink); font-size: 12px; font-weight: 600; }
+        .sb-m-chip svg { color: var(--taupe); }
+        .sb-m-status { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; color: #7d8a6e; font-size: 11px; font-weight: 600; letter-spacing: .06em; }
+        .sb-m-status i { width: 7px; height: 7px; border-radius: 50%; background: var(--sage); animation: sbPulse 1.6s infinite; }
+        @keyframes sbSwing { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+        @keyframes sbScanX { 0%,100% { left: 7%; } 50% { left: 93%; } }
+
         /* KEYFRAMES */
         @keyframes sbFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
         @keyframes sbRise { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: none; } }
@@ -576,7 +666,7 @@ export default function Landing() {
           .sb-nav-cta { min-height: 38px; padding: 0 14px; font-size: 12px; }
           .sb-nav-cta svg { display: none; }
 
-          /* hero: text first, then character, then outfit card */
+          /* hero: text first, then closet visual, then outfit card */
           .sb-hero { min-height: auto; display: flex; flex-direction: column; gap: 6px; padding: 84px 18px 28px; }
           .sb-hero h1 { font-size: clamp(42px, 13vw, 64px); }
           .sb-hero-lede { font-size: 15px; margin-top: 20px; }
@@ -585,56 +675,10 @@ export default function Landing() {
           .sb-proof { margin-top: 22px; }
           .sb-hero-note { display: none; }
 
-          .sb-stage {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  height: auto;
-  min-height: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden;
-}
-
-.sb-character-wrap {
-  position: relative;
-  inset: auto;
-  flex: 0 0 480px;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  height: 480px;
-  translate: 0 0;
-  transform: none;
-  transform-origin: center bottom;
-  overflow: hidden;
-}
-
-.sb-character-wrap .sb-character-canvas {
-  display: block;
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 0;
-  height: 100% !important;
-  min-height: 0;
-  overflow: hidden;
-}
-
-.sb-character-wrap .sb-character-canvas canvas {
-  display: block;
-  width: 100% !important;
-  max-width: 100% !important;
-  height: 100% !important;
-  transform: translateX(-55px);
-}
-          .sb-stage:before { top: 240px; font-size: 34vw; translate: 0 0; }
-          .sb-stage-halo,.sb-stage-ring { top: 240px; left: 50%; translate: -50% -50%; width: 88vw; }
-          .sb-stage-floor { top: 462px; bottom: auto; left: 50%; translate: -50% 0; width: 58vw; }
-          
-          
+          .sb-stage { position: relative; width: 100%; max-width: 100%; min-width: 0; height: auto; min-height: 0; margin: 0; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
+          .sb-stage:before { top: 200px; font-size: 34vw; translate: 0 0; }
+          .sb-stage-halo,.sb-stage-ring { top: 200px; left: 50%; translate: -50% -50%; width: 84vw; }
+          .sb-stage-floor { display: none; }
           .sb-stage-index,.sb-float-weather,.sb-float-style { display: none; }
           .sb-look-panel { position: relative; left: auto; bottom: auto; width: calc(100% - 36px); margin: 8px 18px 0; padding: 14px; animation: none; }
           .sb-look-question { font-size: 17px; }
@@ -782,7 +826,7 @@ export default function Landing() {
             </div>
           </div>
 
-          {/* 3D STYLIST */}
+          {/* 3D STYLIST (laptop / tablet) or CLOSET RAIL (phone) */}
           <div
             className="sb-stage"
             aria-label="Interactive 3D StyleBuddy stylist"
@@ -791,9 +835,13 @@ export default function Landing() {
             <div className="sb-stage-ring" />
             <div className="sb-stage-floor" />
 
-            <div className="sb-character-wrap">
-              <StylistCharacter />
-            </div>
+            {isPhone ? (
+              <MobileCloset look={currentLook} isBuilding={isBuilding} />
+            ) : (
+              <div className="sb-character-wrap">
+                <StylistCharacter />
+              </div>
+            )}
 
             <span className="sb-stage-index">
               STYLEBUDDY / YOUR PERSONAL STYLIST
@@ -943,8 +991,6 @@ export default function Landing() {
             ))}
           </div>
         </section>
-
-        
 
         {/* CINEMATIC 3D HOW IT WORKS */}
         <section id="how" className="sb-process">
