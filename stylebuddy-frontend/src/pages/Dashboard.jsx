@@ -24,7 +24,6 @@ import {
   LoadingState,
 } from "../components/UI";
 
-
 /* =========================================================
    HELPERS
    ========================================================= */
@@ -33,7 +32,6 @@ const API_ORIGIN = (
   import.meta.env.VITE_API_BASE_URL ||
   "http://localhost:5000/api"
 ).replace(/\/api\/?$/, "");
-
 
 function getImageUrl(image) {
   if (!image) return "";
@@ -52,7 +50,6 @@ function getImageUrl(image) {
   return `${API_ORIGIN}/${image}`;
 }
 
-
 function getFirstName(name) {
   if (!name) return "there";
 
@@ -61,7 +58,6 @@ function getFirstName(name) {
     .split(/\s+/)[0];
 }
 
-
 function getGreeting() {
   const hour = new Date().getHours();
 
@@ -69,7 +65,6 @@ function getGreeting() {
   if (hour < 17) return "Good afternoon";
   return "Good evening";
 }
-
 
 function getItemName(item) {
   return (
@@ -81,7 +76,6 @@ function getItemName(item) {
     "Wardrobe piece"
   );
 }
-
 
 /* =========================================================
    DASHBOARD
@@ -101,7 +95,6 @@ export default function Dashboard() {
 
   const [heroIndex, setHeroIndex] = useState(0);
   const [quickActionIndex, setQuickActionIndex] = useState(0);
-
 
   /* =======================================================
      LOAD DASHBOARD
@@ -137,7 +130,6 @@ export default function Dashboard() {
 
     loadDashboard();
   }, [setCloset]);
-
 
   /* =======================================================
      ROTATING HERO CONTENT
@@ -178,7 +170,6 @@ export default function Dashboard() {
     ];
   }, [closet.length]);
 
-
   useEffect(() => {
     const timer = setInterval(() => {
       setHeroIndex((current) =>
@@ -189,29 +180,108 @@ export default function Dashboard() {
     return () => clearInterval(timer);
   }, [heroSlides.length]);
 
-
   const activeSlide =
     heroSlides[heroIndex];
 
   const ActiveIcon =
     activeSlide.icon;
 
-
   /* =======================================================
-     REAL CLOSET ITEMS FOR HERO
+     REAL CLOSET ITEMS OR SAMPLE ITEMS FOR HERO
      ======================================================= */
+const heroClosetItems = useMemo(() => {
+  // Actual wardrobe items uploaded by the user
+  const wardrobeItems = closet.filter(
+    (item) => item?.image || item?.imageUrl
+  );
 
-  const heroClosetItems = useMemo(() => {
-    return closet
-      .filter(
-        (item) =>
-          item?.image ||
-          item?.imageUrl
-      )
-      .slice(0, 4);
-  }, [closet]);
+  // Three sets of sample images for the three hero slides
+  const sampleSlides = [
+    [
+      {
+        id: "sample-1",
+        articleType: "Shirt",
+        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "sample-2",
+        articleType: "Trousers",
+        image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "sample-3",
+        articleType: "Jacket",
+        image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "sample-4",
+        articleType: "Outfit",
+        image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=500&auto=format&fit=crop&q=80",
+      },
+    ],
 
+    [
+      {
+        id: "sample-5",
+        articleType: "Casual Shirt",
+        image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=500&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "sample-6",
+        articleType: "Denim",
+        image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "sample-7",
+        articleType: "Sneakers",
+        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "sample-8",
+        articleType: "Streetwear",
+        image: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=500&auto=format&fit=crop&q=80",
+      },
+    ],
 
+    [
+      {
+        id: "sample-9",
+        articleType: "Formal Shirt",
+        image: "https://images.unsplash.com/photo-1603252110481-7ba873bf42ab?w=500&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "sample-10",
+        articleType: "Formal Trousers",
+        image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "sample-11",
+        articleType: "Blazer",
+        image: "https://images.unsplash.com/photo-1598808503746-f34c53b9323e?w=500&auto=format&fit=crop&q=80",
+      },
+      {
+        id: "sample-12",
+        articleType: "Complete Look",
+        image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=500&auto=format&fit=crop&q=80",
+      },
+    ],
+  ];
+
+  // If the user has uploaded clothes, rotate through their actual items.
+  if (wardrobeItems.length > 0) {
+    const startIndex = (heroIndex * 4) % wardrobeItems.length;
+
+    return Array.from({ length: 4 }, (_, index) => {
+      return wardrobeItems[
+        (startIndex + index) % wardrobeItems.length
+      ];
+    });
+  }
+
+  // Otherwise, show different sample images for each hero slide.
+  return sampleSlides[heroIndex % sampleSlides.length];
+
+}, [closet, heroIndex]);
   /* =======================================================
      DYNAMIC QUICK ACTIONS
      ======================================================= */
@@ -238,6 +308,7 @@ export default function Dashboard() {
         to: "/closet?upload=1",
         label: "GROW YOUR CLOSET",
       },
+
       {
         title: "Ask AI Stylist",
         description:
@@ -248,6 +319,7 @@ export default function Dashboard() {
         to: "/stylist",
         label: "PERSONAL STYLE",
       },
+
       {
         title: "Create outfit",
         description:
@@ -258,6 +330,7 @@ export default function Dashboard() {
         to: "/outfit-generator",
         label: "CREATE A LOOK",
       },
+
       {
         title: "Shop the look",
         description:
@@ -271,7 +344,6 @@ export default function Dashboard() {
     ];
   }, [closet]);
 
-
   useEffect(() => {
     const timer = setInterval(() => {
       setQuickActionIndex((current) =>
@@ -281,7 +353,6 @@ export default function Dashboard() {
 
     return () => clearInterval(timer);
   }, [quickActions.length]);
-
 
   /* =======================================================
      LOADING
@@ -297,7 +368,6 @@ export default function Dashboard() {
     );
   }
 
-
   /* =======================================================
      DASHBOARD
      ======================================================= */
@@ -305,9 +375,7 @@ export default function Dashboard() {
   return (
     <div className="page">
 
-      {/* ===================================================
-          PAGE HEADER
-          =================================================== */}
+      {/* PAGE HEADER */}
 
       <PageHeader
         eyebrow="YOUR STYLE SPACE"
@@ -317,10 +385,7 @@ export default function Dashboard() {
         description="Your wardrobe, your style, your next look."
       />
 
-
-      {/* ===================================================
-          NEW DYNAMIC HERO
-          =================================================== */}
+      {/* NEW DYNAMIC HERO */}
 
       <section className="sb-dashboard-hero">
 
@@ -328,7 +393,6 @@ export default function Dashboard() {
 
         <div className="sb-hero-glow sb-glow-one" />
         <div className="sb-hero-glow sb-glow-two" />
-
 
         {/* LEFT CONTENT */}
 
@@ -341,7 +405,6 @@ export default function Dashboard() {
             <span className="sb-live-dot" />
             {activeSlide.eyebrow}
           </div>
-
 
           <div
             key={`title-${heroIndex}`}
@@ -357,7 +420,6 @@ export default function Dashboard() {
               {activeSlide.description}
             </p>
           </div>
-
 
           {/* CTA */}
 
@@ -383,7 +445,6 @@ export default function Dashboard() {
             </Link>
 
           </div>
-
 
           {/* HERO META */}
 
@@ -427,10 +488,7 @@ export default function Dashboard() {
 
         </div>
 
-
-        {/* =================================================
-            RIGHT VISUAL STAGE
-            ================================================= */}
+        {/* RIGHT VISUAL STAGE */}
 
         <div className="sb-hero-visual">
 
@@ -440,7 +498,6 @@ export default function Dashboard() {
 
             <div className="sb-orbit-ring ring-one" />
             <div className="sb-orbit-ring ring-two" />
-
 
             <div className="sb-style-center">
 
@@ -467,45 +524,33 @@ export default function Dashboard() {
 
           </div>
 
+          {/* REAL OR SAMPLE CLOTHING IMAGE CARDS */}
 
-          {/* REAL CLOSET IMAGE CARDS */}
+          {heroClosetItems.map((item, index) => {
+  const image = getImageUrl(
+    item.image || item.imageUrl
+  );
 
-          {heroClosetItems.map(
-            (item, index) => {
+  return (
+    <div
+      key={`${heroIndex}-${item.id || index}`}
+      className={`sb-floating-garment garment-${index + 1} sb-garment-change`}
+    >
+      {image ? (
+        <img
+          src={image}
+          alt={getItemName(item)}
+        />
+      ) : (
+        <Shirt size={20} />
+      )}
 
-              const image = getImageUrl(
-                item.image ||
-                item.imageUrl
-              );
-
-              return (
-                <div
-                  key={
-                    item.id ||
-                    `${index}-${getItemName(item)}`
-                  }
-                  className={`sb-floating-garment garment-${index + 1}`}
-                >
-
-                  {image ? (
-                    <img
-                      src={image}
-                      alt={getItemName(item)}
-                    />
-                  ) : (
-                    <Shirt size={20} />
-                  )}
-
-                  <div className="sb-garment-label">
-                    {getItemName(item)}
-                  </div>
-
-                </div>
-              );
-            }
-          )}
-
-
+      <div className="sb-garment-label">
+        {getItemName(item)}
+      </div>
+    </div>
+  );
+})}
           {/* WEATHER FLOATING CARD */}
 
           {weather && (
@@ -531,7 +576,6 @@ export default function Dashboard() {
 
             </div>
           )}
-
 
           {/* STYLE MATCH CARD */}
 
@@ -559,7 +603,6 @@ export default function Dashboard() {
 
           </div>
 
-
           {/* ROTATING LABEL */}
 
           <div className="sb-orbit-label">
@@ -576,10 +619,7 @@ export default function Dashboard() {
 
       </section>
 
-
-      {/* =================================================
-          HERO DOTS
-          ================================================= */}
+      {/* HERO DOTS */}
 
       <div className="sb-hero-pagination">
 
@@ -603,10 +643,7 @@ export default function Dashboard() {
 
       </div>
 
-
-      {/* =========================================
-          REAL DASHBOARD STATS
-          ========================================= */}
+      {/* REAL DASHBOARD STATS */}
 
       <div className="stats-row">
 
@@ -620,7 +657,6 @@ export default function Dashboard() {
           </strong>
         </div>
 
-
         <div>
           <span>
             Outfits created
@@ -631,7 +667,6 @@ export default function Dashboard() {
           </strong>
         </div>
 
-
         <div>
           <span>
             Saved looks
@@ -641,7 +676,6 @@ export default function Dashboard() {
             {outfits.length}
           </strong>
         </div>
-
 
         <div>
           <span>
@@ -655,10 +689,7 @@ export default function Dashboard() {
 
       </div>
 
-
-      {/* =========================================
-          DYNAMIC QUICK ACTIONS
-          ========================================= */}
+      {/* DYNAMIC QUICK ACTIONS */}
 
       <section className="sb-quick-section">
 
@@ -684,7 +715,6 @@ export default function Dashboard() {
           </div>
 
         </div>
-
 
         <div className="sb-quick-grid">
 
@@ -719,11 +749,9 @@ export default function Dashboard() {
 
                 </div>
 
-
                 <div className="sb-quick-icon">
                   <Icon size={22} />
                 </div>
-
 
                 <div className="sb-quick-content">
 
@@ -737,11 +765,9 @@ export default function Dashboard() {
 
                 </div>
 
-
                 <div className="sb-quick-arrow">
                   <ArrowUpRight size={18} />
                 </div>
-
 
                 <div className="sb-quick-progress">
 
@@ -760,7 +786,6 @@ export default function Dashboard() {
           })}
 
         </div>
-
 
         <div className="sb-quick-pagination">
 
@@ -786,10 +811,7 @@ export default function Dashboard() {
 
       </section>
 
-
-      {/* =========================================
-          SAVED LOOKS
-          ========================================= */}
+      {/* SAVED LOOKS */}
 
       <section>
 
@@ -807,7 +829,6 @@ export default function Dashboard() {
 
           </div>
 
-
           <Link
             to="/outfits"
             className="text-link"
@@ -817,7 +838,6 @@ export default function Dashboard() {
           </Link>
 
         </div>
-
 
         {outfits.length > 0 ? (
 
@@ -850,11 +870,7 @@ export default function Dashboard() {
         )}
 
       </section>
-
-
-      {/* =================================================
-          DASHBOARD HERO STYLES
-          ================================================= */}
+            {/* DASHBOARD HERO STYLES */}
 
       <style>{`
 
@@ -885,7 +901,6 @@ export default function Dashboard() {
           grid-template-columns: 1.02fr .98fr;
         }
 
-
         .sb-hero-content {
           position: relative;
           z-index: 5;
@@ -894,7 +909,6 @@ export default function Dashboard() {
           flex-direction: column;
           justify-content: center;
         }
-
 
         .sb-hero-eyebrow {
           display: flex;
@@ -907,7 +921,6 @@ export default function Dashboard() {
           margin-bottom: 22px;
         }
 
-
         .sb-live-dot {
           width: 7px;
           height: 7px;
@@ -916,7 +929,47 @@ export default function Dashboard() {
           animation: sbPulse 2s infinite;
         }
 
+        .sb-garment-change {
+  animation:
+    sbGarmentAppear .65s ease both,
+    sbFloat 5s ease-in-out infinite;
+}
 
+@keyframes sbGarmentAppear {
+  from {
+    opacity: 0;
+    scale: .85;
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+    filter: blur(0);
+  }
+}
+  /* Hide Style Match floating card on mobile only */
+@media (max-width: 620px) {
+  .sb-floating-match-card {
+    display: none !important;
+  }
+}
+  /* Slightly enlarge floating clothing cards on phones */
+@media (max-width: 620px) {
+  .sb-floating-garment {
+    width: 52px !important;
+    height: 68px !important;
+    padding: 4px !important;
+  }
+
+  .sb-garment-label {
+    font-size: 5px !important;
+  }
+
+  .sb-floating-match-card {
+    display: none !important;
+  }
+}
         .sb-dashboard-hero-title {
           max-width: 620px;
           margin: 0;
@@ -927,13 +980,11 @@ export default function Dashboard() {
           font-weight: 700;
         }
 
-
         .sb-dashboard-hero-title em {
           font-family: Georgia, "Times New Roman", serif;
           font-weight: 400;
           letter-spacing: -.045em;
         }
-
 
         .sb-dashboard-hero-description {
           max-width: 510px;
@@ -942,7 +993,6 @@ export default function Dashboard() {
           font-size: 15px;
           line-height: 1.65;
         }
-
 
         /* ================================================
            BUTTONS
@@ -955,7 +1005,6 @@ export default function Dashboard() {
           margin-top: 30px;
           flex-wrap: wrap;
         }
-
 
         .sb-primary-hero-button {
           display: inline-flex;
@@ -975,12 +1024,10 @@ export default function Dashboard() {
             box-shadow .25s ease;
         }
 
-
         .sb-primary-hero-button:hover {
           transform: translateY(-2px);
           box-shadow: 0 14px 30px rgba(0,0,0,.15);
         }
-
 
         .sb-secondary-hero-button {
           display: inline-flex;
@@ -1002,12 +1049,10 @@ export default function Dashboard() {
             transform .25s ease;
         }
 
-
         .sb-secondary-hero-button:hover {
           background: rgba(255,255,255,.8);
           transform: translateY(-2px);
         }
-
 
         /* ================================================
            META
@@ -1020,19 +1065,16 @@ export default function Dashboard() {
           margin-top: 40px;
         }
 
-
         .sb-hero-meta div:not(.sb-meta-divider) {
           display: flex;
           flex-direction: column;
         }
-
 
         .sb-hero-meta strong {
           color: #171717;
           font-size: 18px;
           line-height: 1;
         }
-
 
         .sb-hero-meta span {
           margin-top: 5px;
@@ -1042,13 +1084,11 @@ export default function Dashboard() {
           text-transform: uppercase;
         }
 
-
         .sb-meta-divider {
           width: 1px;
           height: 28px;
           background: rgba(0,0,0,.1);
         }
-
 
         /* ================================================
            VISUAL
@@ -1060,14 +1100,12 @@ export default function Dashboard() {
           overflow: hidden;
         }
 
-
         .sb-hero-glow {
           position: absolute;
           border-radius: 50%;
           filter: blur(1px);
           pointer-events: none;
         }
-
 
         .sb-glow-one {
           width: 320px;
@@ -1077,7 +1115,6 @@ export default function Dashboard() {
           background: rgba(255,255,255,.6);
         }
 
-
         .sb-glow-two {
           width: 230px;
           height: 230px;
@@ -1085,7 +1122,6 @@ export default function Dashboard() {
           bottom: -30px;
           background: rgba(198,185,163,.2);
         }
-
 
         /* ================================================
            ORBIT
@@ -1100,7 +1136,6 @@ export default function Dashboard() {
           transform: translate(-50%, -50%);
         }
 
-
         .sb-orbit-ring {
           position: absolute;
           inset: 0;
@@ -1108,18 +1143,15 @@ export default function Dashboard() {
           border-radius: 50%;
         }
 
-
         .ring-one {
           animation: sbRotate 18s linear infinite;
         }
-
 
         .ring-two {
           inset: 28px;
           border-style: dashed;
           animation: sbRotateReverse 24s linear infinite;
         }
-
 
         .sb-style-center {
           position: absolute;
@@ -1142,7 +1174,6 @@ export default function Dashboard() {
           text-align: center;
         }
 
-
         .sb-center-icon {
           width: 42px;
           height: 42px;
@@ -1155,14 +1186,12 @@ export default function Dashboard() {
           margin-bottom: 11px;
         }
 
-
         .sb-style-center span {
           color: #9a948a;
           font-size: 7px;
           font-weight: 700;
           letter-spacing: .2em;
         }
-
 
         .sb-style-center strong {
           margin-top: 6px;
@@ -1171,14 +1200,12 @@ export default function Dashboard() {
           letter-spacing: .08em;
         }
 
-
         .sb-style-center small {
           margin-top: 7px;
           color: #aaa49a;
           font-size: 6px;
           letter-spacing: .14em;
         }
-
 
         /* ================================================
            FLOATING GARMENTS
@@ -1199,14 +1226,12 @@ export default function Dashboard() {
           animation: sbFloat 5s ease-in-out infinite;
         }
 
-
         .sb-floating-garment img {
           width: 100%;
           height: 100%;
           object-fit: cover;
           border-radius: 10px;
         }
-
 
         .sb-garment-label {
           position: absolute;
@@ -1225,12 +1250,10 @@ export default function Dashboard() {
           backdrop-filter: blur(8px);
         }
 
-
         .garment-1 {
           left: 8%;
           top: 15%;
         }
-
 
         .garment-2 {
           right: 7%;
@@ -1238,20 +1261,17 @@ export default function Dashboard() {
           animation-delay: -1.4s;
         }
 
-
         .garment-3 {
           left: 11%;
           bottom: 19%;
           animation-delay: -2.2s;
         }
 
-
         .garment-4 {
           right: 11%;
           bottom: 17%;
           animation-delay: -3.1s;
         }
-
 
         /* ================================================
            WEATHER
@@ -1273,7 +1293,6 @@ export default function Dashboard() {
           animation: sbFloatReverse 5.5s ease-in-out infinite;
         }
 
-
         .sb-weather-mini-icon {
           width: 33px;
           height: 33px;
@@ -1285,13 +1304,11 @@ export default function Dashboard() {
           color: #ddd4c5;
         }
 
-
         .sb-floating-weather-card span,
         .sb-floating-weather-card strong,
         .sb-floating-weather-card small {
           display: block;
         }
-
 
         .sb-floating-weather-card span {
           color: #8e8980;
@@ -1299,13 +1316,11 @@ export default function Dashboard() {
           letter-spacing: .15em;
         }
 
-
         .sb-floating-weather-card strong {
           margin-top: 3px;
           color: #eeeae2;
           font-size: 10px;
         }
-
 
         .sb-floating-weather-card small {
           margin-top: 2px;
@@ -1313,34 +1328,31 @@ export default function Dashboard() {
           font-size: 7px;
         }
 
-
         /* ================================================
            MATCH CARD
            ================================================ */
 
-        .sb-floating-match-card {
-          position: absolute;
-          z-index: 6;
-          right: 5%;
-          bottom: 8%;
-          width: 105px;
-          padding: 13px;
-          border-radius: 14px;
-          background: rgba(255,255,255,.72);
-          border: 1px solid rgba(255,255,255,.9);
-          box-shadow: 0 20px 40px rgba(0,0,0,.09);
-          backdrop-filter: blur(14px);
-          animation: sbFloat 5s ease-in-out infinite;
-          animation-delay: -2s;
-        }
-
-
+      .sb-floating-match-card {
+  position: absolute;
+  z-index: 7;
+  right: 27%;
+  top: 5%;
+  bottom: auto;
+  width: 105px;
+  padding: 13px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.82);
+  border: 1px solid rgba(255,255,255,.9);
+  box-shadow: 0 20px 40px rgba(0,0,0,.09);
+  backdrop-filter: blur(14px);
+  animation: sbFloat 5s ease-in-out infinite;
+  animation-delay: -2s;
+}
         .sb-match-top {
           display: flex;
           justify-content: space-between;
           align-items: center;
         }
-
 
         .sb-match-top span {
           color: #888177;
@@ -1349,11 +1361,9 @@ export default function Dashboard() {
           font-weight: 700;
         }
 
-
         .sb-match-top svg {
           color: #7b7469;
         }
-
 
         .sb-floating-match-card strong {
           display: block;
@@ -1361,7 +1371,6 @@ export default function Dashboard() {
           font-size: 25px;
           letter-spacing: -.05em;
         }
-
 
         .sb-match-bar {
           height: 4px;
@@ -1371,7 +1380,6 @@ export default function Dashboard() {
           overflow: hidden;
         }
 
-
         .sb-match-bar span {
           display: block;
           width: 92%;
@@ -1380,14 +1388,12 @@ export default function Dashboard() {
           background: #171717;
         }
 
-
         .sb-floating-match-card small {
           display: block;
           margin-top: 6px;
           color: #99938a;
           font-size: 7px;
         }
-
 
         /* ================================================
            TICKER
@@ -1409,11 +1415,9 @@ export default function Dashboard() {
           letter-spacing: .2em;
         }
 
-
         .sb-orbit-label b {
           color: #6d675e;
         }
-
 
         /* ================================================
            PAGINATION
@@ -1426,7 +1430,6 @@ export default function Dashboard() {
           gap: 7px;
           margin: 13px 0 25px;
         }
-
 
         .sb-hero-pagination button {
           width: 6px;
@@ -1441,13 +1444,11 @@ export default function Dashboard() {
             background .25s ease;
         }
 
-
         .sb-hero-pagination button.active {
           width: 24px;
           border-radius: 99px;
           background: #171717;
         }
-
 
         /* ================================================
            ANIMATIONS
@@ -1456,7 +1457,6 @@ export default function Dashboard() {
         .sb-slide-in {
           animation: sbSlideIn .55s ease both;
         }
-
 
         @keyframes sbSlideIn {
           from {
@@ -1470,7 +1470,6 @@ export default function Dashboard() {
           }
         }
 
-
         @keyframes sbFloat {
           0%, 100% {
             transform: translateY(0) rotate(0deg);
@@ -1480,7 +1479,6 @@ export default function Dashboard() {
             transform: translateY(-9px) rotate(1deg);
           }
         }
-
 
         @keyframes sbFloatReverse {
           0%, 100% {
@@ -1492,7 +1490,6 @@ export default function Dashboard() {
           }
         }
 
-
         @keyframes sbRotate {
           from {
             transform: rotate(0deg);
@@ -1502,7 +1499,6 @@ export default function Dashboard() {
             transform: rotate(360deg);
           }
         }
-
 
         @keyframes sbRotateReverse {
           from {
@@ -1514,7 +1510,6 @@ export default function Dashboard() {
           }
         }
 
-
         @keyframes sbPulse {
           0%, 100% {
             box-shadow: 0 0 0 0 rgba(20,20,20,.15);
@@ -1524,9 +1519,7 @@ export default function Dashboard() {
             box-shadow: 0 0 0 6px rgba(20,20,20,0);
           }
         }
-
-
-        /* ================================================
+                  /* ================================================
            DYNAMIC QUICK ACTIONS
            ================================================ */
 
@@ -1534,7 +1527,6 @@ export default function Dashboard() {
           margin-top: 62px;
           margin-bottom: 70px;
         }
-
 
         .sb-quick-heading {
           display: flex;
@@ -1544,18 +1536,15 @@ export default function Dashboard() {
           margin-bottom: 25px;
         }
 
-
         .sb-quick-heading h2 {
           margin: 5px 0 0;
         }
-
 
         .sb-quick-heading p {
           margin: 9px 0 0;
           color: #888177;
           font-size: 13px;
         }
-
 
         .sb-quick-status {
           display: flex;
@@ -1572,7 +1561,6 @@ export default function Dashboard() {
           white-space: nowrap;
         }
 
-
         .sb-status-dot {
           width: 6px;
           height: 6px;
@@ -1581,13 +1569,11 @@ export default function Dashboard() {
           animation: sbQuickPulse 2s infinite;
         }
 
-
         .sb-quick-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           gap: 12px;
         }
-
 
         .sb-quick-card {
           position: relative;
@@ -1618,13 +1604,11 @@ export default function Dashboard() {
             background .35s ease;
         }
 
-
         .sb-quick-card:hover {
           transform: translateY(-7px);
           border-color: rgba(0,0,0,.16);
           box-shadow: 0 20px 45px rgba(35,30,22,.10);
         }
-
 
         .sb-quick-card.is-active {
           transform: translateY(-5px);
@@ -1642,20 +1626,17 @@ export default function Dashboard() {
           box-shadow: 0 18px 40px rgba(35,30,22,.09);
         }
 
-
         .sb-quick-card-top {
           display: flex;
           align-items: center;
           justify-content: space-between;
         }
 
-
         .sb-quick-number {
           color: #aaa49b;
           font-family: Georgia, "Times New Roman", serif;
           font-size: 13px;
         }
-
 
         .sb-quick-label {
           color: #a19a90;
@@ -1664,11 +1645,9 @@ export default function Dashboard() {
           letter-spacing: .16em;
         }
 
-
         .sb-quick-icon {
           width: 48px;
           height: 48px;
-
           margin-top: 30px;
 
           display: flex;
@@ -1685,25 +1664,21 @@ export default function Dashboard() {
             background .35s ease;
         }
 
-
         .sb-quick-card.is-active .sb-quick-icon {
           background: #171717;
           color: #fff;
           transform: rotate(-4deg) scale(1.06);
         }
 
-
         .sb-quick-card:hover .sb-quick-icon {
           transform: translateY(-2px) rotate(-3deg);
         }
-
 
         .sb-quick-content {
           margin-top: auto;
           padding-top: 22px;
           padding-right: 20px;
         }
-
 
         .sb-quick-content h3 {
           margin: 0;
@@ -1713,7 +1688,6 @@ export default function Dashboard() {
           letter-spacing: -.025em;
         }
 
-
         .sb-quick-content p {
           margin: 8px 0 0;
           max-width: 220px;
@@ -1721,7 +1695,6 @@ export default function Dashboard() {
           font-size: 11px;
           line-height: 1.55;
         }
-
 
         .sb-quick-arrow {
           position: absolute;
@@ -1746,14 +1719,12 @@ export default function Dashboard() {
             color .3s ease;
         }
 
-
         .sb-quick-card:hover .sb-quick-arrow,
         .sb-quick-card.is-active .sb-quick-arrow {
           transform: translate(2px,-2px);
           background: #171717;
           color: #fff;
         }
-
 
         .sb-quick-progress {
           position: absolute;
@@ -1764,7 +1735,6 @@ export default function Dashboard() {
           background: rgba(0,0,0,.04);
         }
 
-
         .sb-quick-progress span {
           display: block;
           width: 0;
@@ -1772,11 +1742,9 @@ export default function Dashboard() {
           background: #171717;
         }
 
-
         .sb-quick-progress span.running {
           animation: sbQuickProgress 3s linear forwards;
         }
-
 
         .sb-quick-pagination {
           display: flex;
@@ -1785,7 +1753,6 @@ export default function Dashboard() {
           gap: 7px;
           margin-top: 15px;
         }
-
 
         .sb-quick-pagination button {
           width: 6px;
@@ -1801,13 +1768,11 @@ export default function Dashboard() {
             background .25s ease;
         }
 
-
         .sb-quick-pagination button.active {
           width: 24px;
           border-radius: 99px;
           background: #171717;
         }
-
 
         @keyframes sbQuickProgress {
           from {
@@ -1819,7 +1784,6 @@ export default function Dashboard() {
           }
         }
 
-
         @keyframes sbQuickPulse {
           0%, 100% {
             box-shadow: 0 0 0 0 rgba(20,20,20,.15);
@@ -1829,7 +1793,6 @@ export default function Dashboard() {
             box-shadow: 0 0 0 6px rgba(20,20,20,0);
           }
         }
-
 
         /* ================================================
            RESPONSIVE
@@ -1841,23 +1804,19 @@ export default function Dashboard() {
             grid-template-columns: 1fr;
           }
 
-
           .sb-hero-content {
             padding-bottom: 30px;
           }
 
-
           .sb-hero-visual {
             min-height: 390px;
           }
-
 
           .sb-style-orbit {
             top: 50%;
           }
 
         }
-
 
         @media (max-width: 620px) {
 
@@ -1866,102 +1825,86 @@ export default function Dashboard() {
             flex-direction: column;
           }
 
-
           .sb-quick-status {
             display: none;
           }
-
 
           .sb-quick-grid {
             grid-template-columns: 1fr;
           }
 
-
           .sb-quick-card {
             min-height: 190px;
           }
-
 
           .sb-dashboard-hero {
             min-height: auto;
             border-radius: 22px;
           }
 
-
           .sb-hero-content {
             padding: 38px 25px 25px;
           }
-
 
           .sb-dashboard-hero-title {
             font-size: 43px;
           }
 
-
           .sb-dashboard-hero-description {
             font-size: 13px;
           }
-
 
           .sb-hero-meta {
             gap: 13px;
           }
 
-
           .sb-hero-meta span {
             font-size: 7px;
           }
 
-
           .sb-hero-visual {
             min-height: 360px;
           }
-
 
           .sb-style-orbit {
             width: 230px;
             height: 230px;
           }
 
-
           .sb-style-center {
             width: 135px;
             height: 135px;
           }
-
 
           .sb-floating-garment {
             width: 64px;
             height: 82px;
           }
 
-
           .sb-floating-weather-card {
             transform: scale(.82);
             transform-origin: bottom left;
           }
 
-
           .sb-floating-match-card {
-            transform: scale(.82);
-            transform-origin: bottom right;
-          }
-
+  top: 4%;
+  right: 25%;
+  bottom: auto;
+  transform: scale(.78);
+  transform-origin: top right;
+}
 
           .garment-1 {
             left: 3%;
           }
 
-
           .garment-2 {
             right: 3%;
           }
 
-
           .garment-3 {
             left: 6%;
           }
-
 
           .garment-4 {
             right: 6%;
