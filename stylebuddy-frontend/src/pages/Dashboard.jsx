@@ -189,99 +189,99 @@ export default function Dashboard() {
   /* =======================================================
      REAL CLOSET ITEMS OR SAMPLE ITEMS FOR HERO
      ======================================================= */
-const heroClosetItems = useMemo(() => {
-  // Actual wardrobe items uploaded by the user
-  const wardrobeItems = closet.filter(
-    (item) => item?.image || item?.imageUrl
-  );
+  const heroClosetItems = useMemo(() => {
+    // Actual wardrobe items uploaded by the user
+    const wardrobeItems = closet.filter(
+      (item) => item?.image || item?.imageUrl
+    );
 
-  // Three sets of sample images for the three hero slides
-  const sampleSlides = [
-    [
-      {
-        id: "sample-1",
-        articleType: "Shirt",
-        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&auto=format&fit=crop&q=80",
-      },
-      {
-        id: "sample-2",
-        articleType: "Trousers",
-        image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&auto=format&fit=crop&q=80",
-      },
-      {
-        id: "sample-3",
-        articleType: "Jacket",
-        image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&auto=format&fit=crop&q=80",
-      },
-      {
-        id: "sample-4",
-        articleType: "Outfit",
-        image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=500&auto=format&fit=crop&q=80",
-      },
-    ],
+    // Three sets of sample images for the three hero slides
+    const sampleSlides = [
+      [
+        {
+          id: "sample-1",
+          articleType: "Shirt",
+          image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&auto=format&fit=crop&q=80",
+        },
+        {
+          id: "sample-2",
+          articleType: "Trousers",
+          image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&auto=format&fit=crop&q=80",
+        },
+        {
+          id: "sample-3",
+          articleType: "Jacket",
+          image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&auto=format&fit=crop&q=80",
+        },
+        {
+          id: "sample-4",
+          articleType: "Outfit",
+          image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=500&auto=format&fit=crop&q=80",
+        },
+      ],
 
-    [
-      {
-        id: "sample-5",
-        articleType: "Casual Shirt",
-        image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=500&auto=format&fit=crop&q=80",
-      },
-      {
-        id: "sample-6",
-        articleType: "Denim",
-        image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&auto=format&fit=crop&q=80",
-      },
-      {
-        id: "sample-7",
-        articleType: "Sneakers",
-        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop&q=80",
-      },
-      {
-        id: "sample-8",
-        articleType: "Streetwear",
-        image: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=500&auto=format&fit=crop&q=80",
-      },
-    ],
+      [
+        {
+          id: "sample-5",
+          articleType: "Casual Shirt",
+          image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=500&auto=format&fit=crop&q=80",
+        },
+        {
+          id: "sample-6",
+          articleType: "Denim",
+          image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&auto=format&fit=crop&q=80",
+        },
+        {
+          id: "sample-7",
+          articleType: "Sneakers",
+          image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop&q=80",
+        },
+        {
+          id: "sample-8",
+          articleType: "Streetwear",
+          image: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=500&auto=format&fit=crop&q=80",
+        },
+      ],
 
-    [
-      {
-        id: "sample-9",
-        articleType: "Formal Shirt",
-        image: "https://images.unsplash.com/photo-1603252110481-7ba873bf42ab?w=500&auto=format&fit=crop&q=80",
-      },
-      {
-        id: "sample-10",
-        articleType: "Formal Trousers",
-        image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&auto=format&fit=crop&q=80",
-      },
-      {
-        id: "sample-11",
-        articleType: "Blazer",
-        image: "https://images.unsplash.com/photo-1598808503746-f34c53b9323e?w=500&auto=format&fit=crop&q=80",
-      },
-      {
-        id: "sample-12",
-        articleType: "Complete Look",
-        image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=500&auto=format&fit=crop&q=80",
-      },
-    ],
-  ];
+      [
+        {
+          id: "sample-9",
+          articleType: "Formal Shirt",
+          image: "https://images.unsplash.com/photo-1603252110481-7ba873bf42ab?w=500&auto=format&fit=crop&q=80",
+        },
+        {
+          id: "sample-10",
+          articleType: "Formal Trousers",
+          image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&auto=format&fit=crop&q=80",
+        },
+        {
+          id: "sample-11",
+          articleType: "Blazer",
+          image: "https://images.unsplash.com/photo-1598808503746-f34c53b9323e?w=500&auto=format&fit=crop&q=80",
+        },
+        {
+          id: "sample-12",
+          articleType: "Complete Look",
+          image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=500&auto=format&fit=crop&q=80",
+        },
+      ],
+    ];
 
-  // If the user has uploaded clothes, rotate through their actual items.
-  if (wardrobeItems.length > 0) {
-    const startIndex = (heroIndex * 4) % wardrobeItems.length;
+    // If the user has uploaded clothes, rotate through their actual items.
+    if (wardrobeItems.length > 0) {
+      const startIndex = (heroIndex * 4) % wardrobeItems.length;
 
-    return Array.from({ length: 4 }, (_, index) => {
-      return wardrobeItems[
-        (startIndex + index) % wardrobeItems.length
-      ];
-    });
-  }
+      return Array.from({ length: 4 }, (_, index) => {
+        return wardrobeItems[
+          (startIndex + index) % wardrobeItems.length
+        ];
+      });
+    }
 
-  // Otherwise, show different sample images for each hero slide.
-  return sampleSlides[heroIndex % sampleSlides.length];
+    // Otherwise, show different sample images for each hero slide.
+    return sampleSlides[heroIndex % sampleSlides.length];
+  }, [closet, heroIndex]);
 
-}, [closet, heroIndex]);
   /* =======================================================
      DYNAMIC QUICK ACTIONS
      ======================================================= */
@@ -527,30 +527,31 @@ const heroClosetItems = useMemo(() => {
           {/* REAL OR SAMPLE CLOTHING IMAGE CARDS */}
 
           {heroClosetItems.map((item, index) => {
-  const image = getImageUrl(
-    item.image || item.imageUrl
-  );
+            const image = getImageUrl(
+              item.image || item.imageUrl
+            );
 
-  return (
-    <div
-      key={`${heroIndex}-${item.id || index}`}
-      className={`sb-floating-garment garment-${index + 1} sb-garment-change`}
-    >
-      {image ? (
-        <img
-          src={image}
-          alt={getItemName(item)}
-        />
-      ) : (
-        <Shirt size={20} />
-      )}
+            return (
+              <div
+                key={`${heroIndex}-${item.id || index}`}
+                className={`sb-floating-garment garment-${index + 1} sb-garment-change`}
+              >
+                {image ? (
+                  <img
+                    src={image}
+                    alt={getItemName(item)}
+                  />
+                ) : (
+                  <Shirt size={20} />
+                )}
 
-      <div className="sb-garment-label">
-        {getItemName(item)}
-      </div>
-    </div>
-  );
-})}
+                <div className="sb-garment-label">
+                  {getItemName(item)}
+                </div>
+              </div>
+            );
+          })}
+
           {/* WEATHER FLOATING CARD */}
 
           {weather && (
@@ -870,7 +871,8 @@ const heroClosetItems = useMemo(() => {
         )}
 
       </section>
-            {/* DASHBOARD HERO STYLES */}
+
+      {/* DASHBOARD HERO STYLES */}
 
       <style>{`
 
@@ -930,46 +932,25 @@ const heroClosetItems = useMemo(() => {
         }
 
         .sb-garment-change {
-  animation:
-    sbGarmentAppear .65s ease both,
-    sbFloat 5s ease-in-out infinite;
-}
+          animation:
+            sbGarmentAppear .65s ease both,
+            sbFloat 5s ease-in-out infinite;
+        }
 
-@keyframes sbGarmentAppear {
-  from {
-    opacity: 0;
-    scale: .85;
-    filter: blur(5px);
-  }
+        @keyframes sbGarmentAppear {
+          from {
+            opacity: 0;
+            scale: .85;
+            filter: blur(5px);
+          }
 
-  to {
-    opacity: 1;
-    scale: 1;
-    filter: blur(0);
-  }
-}
-  /* Hide Style Match floating card on mobile only */
-@media (max-width: 620px) {
-  .sb-floating-match-card {
-    display: none !important;
-  }
-}
-  /* Slightly enlarge floating clothing cards on phones */
-@media (max-width: 620px) {
-  .sb-floating-garment {
-    width: 52px !important;
-    height: 68px !important;
-    padding: 4px !important;
-  }
+          to {
+            opacity: 1;
+            scale: 1;
+            filter: blur(0);
+          }
+        }
 
-  .sb-garment-label {
-    font-size: 5px !important;
-  }
-
-  .sb-floating-match-card {
-    display: none !important;
-  }
-}
         .sb-dashboard-hero-title {
           max-width: 620px;
           margin: 0;
@@ -1208,19 +1189,19 @@ const heroClosetItems = useMemo(() => {
         }
 
         /* ================================================
-           FLOATING GARMENTS
+           FLOATING GARMENTS  (UPDATED: larger cards)
            ================================================ */
 
         .sb-floating-garment {
           position: absolute;
           z-index: 4;
-          width: 82px;
-          height: 104px;
-          padding: 6px;
-          border-radius: 15px;
-          background: rgba(255,255,255,.74);
+          width: 96px;
+          height: 122px;
+          padding: 7px;
+          border-radius: 16px;
+          background: rgba(255,255,255,.78);
           border: 1px solid rgba(255,255,255,.9);
-          box-shadow: 0 20px 35px rgba(0,0,0,.1);
+          box-shadow: 0 20px 35px rgba(0,0,0,.12);
           backdrop-filter: blur(12px);
           overflow: hidden;
           animation: sbFloat 5s ease-in-out infinite;
@@ -1230,34 +1211,35 @@ const heroClosetItems = useMemo(() => {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          border-radius: 10px;
+          border-radius: 11px;
         }
 
         .sb-garment-label {
           position: absolute;
-          left: 7px;
-          right: 7px;
-          bottom: 7px;
-          padding: 4px 5px;
+          left: 9px;
+          right: 9px;
+          bottom: 9px;
+          padding: 4px 6px;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
-          border-radius: 6px;
-          background: rgba(255,255,255,.84);
+          text-align: center;
+          border-radius: 7px;
+          background: rgba(255,255,255,.88);
           color: #333;
-          font-size: 6px;
+          font-size: 8px;
           font-weight: 700;
           backdrop-filter: blur(8px);
         }
 
         .garment-1 {
           left: 8%;
-          top: 15%;
+          top: 13%;
         }
 
         .garment-2 {
           right: 7%;
-          top: 13%;
+          top: 11%;
           animation-delay: -1.4s;
         }
 
@@ -1332,22 +1314,23 @@ const heroClosetItems = useMemo(() => {
            MATCH CARD
            ================================================ */
 
-      .sb-floating-match-card {
-  position: absolute;
-  z-index: 7;
-  right: 27%;
-  top: 5%;
-  bottom: auto;
-  width: 105px;
-  padding: 13px;
-  border-radius: 14px;
-  background: rgba(255,255,255,.82);
-  border: 1px solid rgba(255,255,255,.9);
-  box-shadow: 0 20px 40px rgba(0,0,0,.09);
-  backdrop-filter: blur(14px);
-  animation: sbFloat 5s ease-in-out infinite;
-  animation-delay: -2s;
-}
+        .sb-floating-match-card {
+          position: absolute;
+          z-index: 7;
+          right: 27%;
+          top: 5%;
+          bottom: auto;
+          width: 105px;
+          padding: 13px;
+          border-radius: 14px;
+          background: rgba(255,255,255,.82);
+          border: 1px solid rgba(255,255,255,.9);
+          box-shadow: 0 20px 40px rgba(0,0,0,.09);
+          backdrop-filter: blur(14px);
+          animation: sbFloat 5s ease-in-out infinite;
+          animation-delay: -2s;
+        }
+
         .sb-match-top {
           display: flex;
           justify-content: space-between;
@@ -1519,7 +1502,8 @@ const heroClosetItems = useMemo(() => {
             box-shadow: 0 0 0 6px rgba(20,20,20,0);
           }
         }
-                  /* ================================================
+
+        /* ================================================
            DYNAMIC QUICK ACTIONS
            ================================================ */
 
@@ -1809,7 +1793,7 @@ const heroClosetItems = useMemo(() => {
           }
 
           .sb-hero-visual {
-            min-height: 390px;
+            min-height: 420px;
           }
 
           .sb-style-orbit {
@@ -1862,8 +1846,9 @@ const heroClosetItems = useMemo(() => {
             font-size: 7px;
           }
 
+          /* Taller stage so the bigger cards have room */
           .sb-hero-visual {
-            min-height: 360px;
+            min-height: 420px;
           }
 
           .sb-style-orbit {
@@ -1876,9 +1861,25 @@ const heroClosetItems = useMemo(() => {
             height: 135px;
           }
 
+          /* BIGGER floating clothing cards on phones */
           .sb-floating-garment {
-            width: 64px;
-            height: 82px;
+            width: 84px;
+            height: 108px;
+            padding: 5px;
+            border-radius: 14px;
+          }
+
+          .sb-floating-garment img {
+            border-radius: 10px;
+          }
+
+          .sb-garment-label {
+            left: 7px;
+            right: 7px;
+            bottom: 7px;
+            padding: 3px 4px;
+            font-size: 7.5px;
+            border-radius: 6px;
           }
 
           .sb-floating-weather-card {
@@ -1886,28 +1887,29 @@ const heroClosetItems = useMemo(() => {
             transform-origin: bottom left;
           }
 
+          /* Style Match card hidden on mobile */
           .sb-floating-match-card {
-  top: 4%;
-  right: 25%;
-  bottom: auto;
-  transform: scale(.78);
-  transform-origin: top right;
-}
+            display: none !important;
+          }
 
           .garment-1 {
             left: 3%;
+            top: 8%;
           }
 
           .garment-2 {
             right: 3%;
+            top: 7%;
           }
 
           .garment-3 {
-            left: 6%;
+            left: 4%;
+            bottom: 24%;
           }
 
           .garment-4 {
-            right: 6%;
+            right: 4%;
+            bottom: 22%;
           }
 
         }
