@@ -156,7 +156,8 @@ function useIsPhone(query = "(max-width: 650px)") {
   return isPhone;
 }
 
-// Phone-only hero visual: a swinging closet rail with a scanning beam
+// Phone-only closet rail: swinging hangers with a scanning beam.
+// On phones it sits directly under the 3D avatar.
 function MobileCloset({ look, isBuilding }) {
   const pieces = [
     { Icon: Shirt, label: look.items[0] },
@@ -329,16 +330,16 @@ export default function Landing() {
         .sb-page h1,.sb-page h2,.sb-page h3 { font-family: "DM Sans", sans-serif; font-weight: 700; }
         .sb-page em { font-family: "Playfair Display", serif; font-weight: 500; letter-spacing: -.03em; }
         /* Keep the 3D character responsive on small screens */
-.sb-character-wrap,
-.sb-character-canvas {
-  box-sizing: border-box;
-  min-width: 0;
-}
+        .sb-character-wrap,
+        .sb-character-canvas {
+          box-sizing: border-box;
+          min-width: 0;
+        }
 
-.sb-character-canvas canvas {
-  display: block;
-  max-width: 100%;
-}
+        .sb-character-canvas canvas {
+          display: block;
+          max-width: 100%;
+        }
 
         /* NAV */
         .sb-nav {
@@ -604,7 +605,7 @@ export default function Landing() {
         .sb-footer .sb-brand { color: #f6f3ec; font-size: 17px; }
         .sb-footer .sb-brand-mark { color: var(--ink); background: #f4f0e7; }
 
-        /* PHONE-ONLY HERO VISUAL */
+        /* PHONE-ONLY HERO VISUAL: closet rail (sits under the 3D avatar) */
         .sb-m-closet { position: relative; z-index: 3; width: 100%; min-height: 360px; padding-bottom: 18px; display: flex; flex-direction: column; align-items: center; }
         .sb-m-rail { position: relative; width: 88%; height: 6px; margin-top: 30px; border-radius: 6px; background: linear-gradient(90deg, #cfc8b8, #8d806c, #cfc8b8); box-shadow: 0 6px 14px rgba(48,42,32,.18); }
         .sb-m-rail:before,.sb-m-rail:after { content: ""; position: absolute; top: -2px; width: 10px; height: 10px; border-radius: 50%; background: var(--ink); }
@@ -666,7 +667,7 @@ export default function Landing() {
           .sb-nav-cta { min-height: 38px; padding: 0 14px; font-size: 12px; }
           .sb-nav-cta svg { display: none; }
 
-          /* hero: text first, then closet visual, then outfit card */
+          /* hero: text first, then 3D avatar + closet rail, then outfit card */
           .sb-hero { min-height: auto; display: flex; flex-direction: column; gap: 6px; padding: 84px 18px 28px; }
           .sb-hero h1 { font-size: clamp(42px, 13vw, 64px); }
           .sb-hero-lede { font-size: 15px; margin-top: 20px; }
@@ -676,10 +677,37 @@ export default function Landing() {
           .sb-hero-note { display: none; }
 
           .sb-stage { position: relative; width: 100%; max-width: 100%; min-width: 0; height: auto; min-height: 0; margin: 0; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
-          .sb-stage:before { top: 200px; font-size: 34vw; translate: 0 0; }
-          .sb-stage-halo,.sb-stage-ring { top: 200px; left: 50%; translate: -50% -50%; width: 84vw; }
+          .sb-stage:before { top: 180px; font-size: 34vw; translate: 0 0; }
+          .sb-stage-halo,.sb-stage-ring { top: 180px; left: 50%; translate: -50% -50%; width: 84vw; }
           .sb-stage-floor { display: none; }
-          .sb-stage-index,.sb-float-weather,.sb-float-style { display: none; }
+          .sb-stage-index { display: none; }
+
+          /* floating info pills sit on top of the avatar */
+          .sb-float-weather,.sb-float-style { display: flex; position: absolute; z-index: 6; top: 14px; bottom: auto; padding: 9px 12px; gap: 9px; animation: none; transform: scale(.82); }
+          .sb-float-weather { left: 0; right: auto; transform-origin: top left; }
+          .sb-float-style { left: auto; right: 0; transform-origin: top right; }
+          .sb-float-icon { width: 30px; height: 30px; border-radius: 9px; }
+
+          /* 3D avatar + closet rail combo */
+          .sb-m-combo { position: relative; z-index: 3; width: 100%; display: flex; flex-direction: column; align-items: center; }
+          .sb-m-avatar { position: relative; width: 100%; height: 360px; touch-action: pan-y; filter: drop-shadow(0 22px 26px rgba(21,21,19,.2)); }
+          .sb-m-avatar > * { width: 100%; height: 100%; }
+          .sb-m-avatar .sb-character-canvas { width: 100%; height: 100%; min-height: 0; }
+          .sb-m-avatar canvas { touch-action: pan-y; }
+          .sb-m-avatar:after { content: ""; position: absolute; left: 50%; bottom: 4px; width: 60%; height: 22px; translate: -50% 0; border-radius: 50%; pointer-events: none; background: radial-gradient(ellipse at center, rgba(48,42,32,.3), transparent 70%); filter: blur(4px); }
+
+          /* compact closet rail directly under the avatar */
+          .sb-m-closet { min-height: 0; margin-top: 2px; padding-bottom: 10px; }
+          .sb-m-rail { margin-top: 6px; width: 86%; }
+          .sb-m-hangers { width: 86%; gap: 10px; }
+          .sb-m-hook { height: 14px; }
+          .sb-m-garment { aspect-ratio: 1 / .9; border-radius: 14px; }
+          .sb-m-icon { width: 32px; height: 32px; }
+          .sb-m-hanger small { margin-top: 7px; font-size: 10.5px; }
+          .sb-m-scan { top: 20px; height: 108px; }
+          .sb-m-chips { margin-top: 16px; }
+          .sb-m-status { margin-top: 12px; }
+
           .sb-look-panel { position: relative; left: auto; bottom: auto; width: calc(100% - 36px); margin: 8px 18px 0; padding: 14px; animation: none; }
           .sb-look-question { font-size: 17px; }
 
@@ -831,7 +859,7 @@ export default function Landing() {
             </div>
           </div>
 
-          {/* 3D STYLIST (laptop / tablet) or CLOSET RAIL (phone) */}
+          {/* 3D STYLIST on every screen; on phones the closet rail sits under it */}
           <div
             className="sb-stage"
             aria-label="Interactive 3D StyleBuddy stylist"
@@ -841,7 +869,12 @@ export default function Landing() {
             <div className="sb-stage-floor" />
 
             {isPhone ? (
-              <MobileCloset look={currentLook} isBuilding={isBuilding} />
+              <div className="sb-m-combo">
+                <div className="sb-m-avatar">
+                  <StylistCharacter />
+                </div>
+                <MobileCloset look={currentLook} isBuilding={isBuilding} />
+              </div>
             ) : (
               <div className="sb-character-wrap">
                 <StylistCharacter />
