@@ -867,163 +867,104 @@ export default function Landing() {
             </div>
           </div>
 
-         {/* 3D STYLIST + OUTFIT PREVIEW */}
-<div
-  className="sb-stage"
-  aria-label="Interactive 3D StyleBuddy stylist"
->
-  <div className="sb-stage-halo" />
-  <div className="sb-stage-ring" />
-  <div className="sb-stage-floor" />
-
-  {/* OUTFIT PREVIEW — MOVED ABOVE THE CLOSET ON MOBILE */}
-  {isPhone && (
-    <div className="sb-look-panel">
-      <div className="sb-look-top">
-        <span className="sb-look-label">
-          A LOOK FROM YOUR STYLIST
-        </span>
-
-        <span className="sb-look-live">
-          <i /> LIVE PREVIEW
-        </span>
-      </div>
-
-      <div className="sb-look-question">
-        {currentLook.request}
-      </div>
-
-      <div
-        className={`sb-look-items ${
-          isBuilding ? "sb-look-loading" : ""
-        }`}
-      >
-        {currentLook.items.map((item, index) => (
+          {/* 3D STYLIST on every screen; on phones the closet rail sits under it */}
           <div
-            className="sb-look-item"
-            key={`${lookIndex}-${item}`}
+            className="sb-stage"
+            aria-label="Interactive 3D StyleBuddy stylist"
           >
-            <div
-              className="sb-look-swatch"
-              style={{
-                background: currentLook.colors[index],
-              }}
-            />
+            <div className="sb-stage-halo" />
+            <div className="sb-stage-ring" />
+            <div className="sb-stage-floor" />
 
-            <span>{item}</span>
+            {isPhone ? (
+              <div className="sb-m-combo">
+                <div className="sb-m-avatar">
+                  <StylistCharacter />
+                </div>
+                <MobileCloset look={currentLook} isBuilding={isBuilding} />
+              </div>
+            ) : (
+              <div className="sb-character-wrap">
+                <StylistCharacter />
+              </div>
+            )}
+
+            <span className="sb-stage-index">
+              STYLEBUDDY / YOUR PERSONAL STYLIST
+            </span>
+
+            {/* WEATHER CARD */}
+            <div className="sb-float-card sb-float-weather">
+              <span className="sb-float-icon">
+                <CloudSun size={18} />
+              </span>
+
+              <span>
+                <small>THE DAY AHEAD</small>
+                <strong>Weather-aware looks</strong>
+              </span>
+            </div>
+
+            {/* STYLE PROFILE CARD */}
+            <div className="sb-float-card sb-float-style">
+              <span className="sb-style-dot" />
+
+              <span>
+                <small>YOUR STYLE PROFILE</small>
+                <strong>Personalised to you</strong>
+              </span>
+            </div>
+
+            {/* OUTFIT PREVIEW */}
+            <div className="sb-look-panel">
+              <div className="sb-look-top">
+                <span className="sb-look-label">
+                  A LOOK FROM YOUR STYLIST
+                </span>
+
+                <span className="sb-look-live">
+                  <i /> LIVE PREVIEW
+                </span>
+              </div>
+
+              <div className="sb-look-question">
+                {currentLook.request}
+              </div>
+
+              <div
+                className={`sb-look-items ${
+                  isBuilding ? "sb-look-loading" : ""
+                }`}
+              >
+                {currentLook.items.map((item, index) => (
+                  <div
+                    className="sb-look-item"
+                    key={`${lookIndex}-${item}`}
+                  >
+                    <div
+                      className="sb-look-swatch"
+                      style={{
+                        background: currentLook.colors[index],
+                      }}
+                    />
+
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="sb-look-footer">
+                <span>
+                  {currentLook.occasion} · {currentLook.temperature}C ·{" "}
+                  {currentLook.style}
+                </span>
+
+                <span className="sb-look-score">
+                  {isBuilding ? "···" : currentLook.match}
+                </span>
+              </div>
+            </div>
           </div>
-        ))}
-      </div>
-
-      <div className="sb-look-footer">
-        <span>
-          {currentLook.occasion} · {currentLook.temperature}C ·{" "}
-          {currentLook.style}
-        </span>
-
-        <span className="sb-look-score">
-          {isBuilding ? "···" : currentLook.match}
-        </span>
-      </div>
-    </div>
-  )}
-
-  {/* 3D AVATAR + CLOSET */}
-  {isPhone ? (
-    <div className="sb-m-combo">
-      <div className="sb-m-avatar">
-        <StylistCharacter />
-      </div>
-
-      <MobileCloset
-        look={currentLook}
-        isBuilding={isBuilding}
-      />
-    </div>
-  ) : (
-    <div className="sb-character-wrap">
-      <StylistCharacter />
-    </div>
-  )}
-
-  <span className="sb-stage-index">
-    STYLEBUDDY / YOUR PERSONAL STYLIST
-  </span>
-
-  {/* WEATHER CARD */}
-  <div className="sb-float-card sb-float-weather">
-    <span className="sb-float-icon">
-      <CloudSun size={18} />
-    </span>
-
-    <span>
-      <small>THE DAY AHEAD</small>
-      <strong>Weather-aware looks</strong>
-    </span>
-  </div>
-
-  {/* STYLE PROFILE CARD */}
-  <div className="sb-float-card sb-float-style">
-    <span className="sb-style-dot" />
-
-    <span>
-      <small>YOUR STYLE PROFILE</small>
-      <strong>Personalised to you</strong>
-    </span>
-  </div>
-
-  {/* OUTFIT PREVIEW — ORIGINAL DESKTOP POSITION */}
-  {!isPhone && (
-    <div className="sb-look-panel">
-      <div className="sb-look-top">
-        <span className="sb-look-label">
-          A LOOK FROM YOUR STYLIST
-        </span>
-
-        <span className="sb-look-live">
-          <i /> LIVE PREVIEW
-        </span>
-      </div>
-
-      <div className="sb-look-question">
-        {currentLook.request}
-      </div>
-
-      <div
-        className={`sb-look-items ${
-          isBuilding ? "sb-look-loading" : ""
-        }`}
-      >
-        {currentLook.items.map((item, index) => (
-          <div
-            className="sb-look-item"
-            key={`${lookIndex}-${item}`}
-          >
-            <div
-              className="sb-look-swatch"
-              style={{
-                background: currentLook.colors[index],
-              }}
-            />
-
-            <span>{item}</span>
-          </div>
-        ))}
-      </div>
-
-      <div className="sb-look-footer">
-        <span>
-          {currentLook.occasion} · {currentLook.temperature}C ·{" "}
-          {currentLook.style}
-        </span>
-
-        <span className="sb-look-score">
-          {isBuilding ? "···" : currentLook.match}
-        </span>
-      </div>
-    </div>
-  )}
-</div>
         </section>
 
         {/* SCROLLING TICKER */}
