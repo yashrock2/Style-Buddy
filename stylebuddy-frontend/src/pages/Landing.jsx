@@ -676,28 +676,36 @@ export default function Landing() {
           .sb-proof { margin-top: 22px; }
           .sb-hero-note { display: none; }
 
+          /* stage: halo / ring / big STYLE text are centred on the avatar
+             (62px top gap + half of the 440px avatar = 282px) */
           .sb-stage { position: relative; width: 100%; max-width: 100%; min-width: 0; height: auto; min-height: 0; margin: 0; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
-          .sb-stage:before { top: 180px; font-size: 34vw; translate: 0 0; }
-          .sb-stage-halo,.sb-stage-ring { top: 180px; left: 50%; translate: -50% -50%; width: 84vw; }
+          .sb-stage:before { top: 282px; font-size: 34vw; translate: 0 0; }
+          .sb-stage-halo,.sb-stage-ring { top: 282px; left: 50%; translate: -50% -50%; width: 84vw; }
+          .sb-stage-ring:after { display: none; }
           .sb-stage-floor { display: none; }
           .sb-stage-index { display: none; }
 
-          /* floating info pills sit on top of the avatar */
-          .sb-float-weather,.sb-float-style { display: flex; position: absolute; z-index: 6; top: 14px; bottom: auto; padding: 9px 12px; gap: 9px; animation: none; transform: scale(.82); }
+          /* floating info pills sit in the free space ABOVE the avatar's head */
+          .sb-float-weather,.sb-float-style { display: flex; position: absolute; z-index: 6; top: 10px; bottom: auto; padding: 9px 12px; gap: 9px; animation: none; transform: scale(.82); }
           .sb-float-weather { left: 0; right: auto; transform-origin: top left; }
           .sb-float-style { left: auto; right: 0; transform-origin: top right; }
           .sb-float-icon { width: 30px; height: 30px; border-radius: 9px; }
 
           /* 3D avatar + closet rail combo */
-          .sb-m-combo { position: relative; z-index: 3; width: 100%; display: flex; flex-direction: column; align-items: center; }
-          .sb-m-avatar { position: relative; width: 100%; height: 360px; touch-action: pan-y; filter: drop-shadow(0 22px 26px rgba(21,21,19,.2)); }
-          .sb-m-avatar > * { width: 100%; height: 100%; }
+          .sb-m-combo {
+            /* tweak this one value to nudge the avatar left (-) or right (+) */
+            --sb-m-shift: -17.5%;
+            position: relative; z-index: 3; width: 100%; display: flex; flex-direction: column; align-items: center;
+          }
+          /* taller avatar, with clear space above (pills) and below (closet rail) */
+          .sb-m-avatar { position: relative; width: 100%; height: 440px; margin: 62px 0 16px; touch-action: pan-y; filter: drop-shadow(0 22px 26px rgba(21,21,19,.2)); }
+          .sb-m-avatar > * { width: 100%; height: 100%; translate: var(--sb-m-shift) 0; }
           .sb-m-avatar .sb-character-canvas { width: 100%; height: 100%; min-height: 0; }
           .sb-m-avatar canvas { touch-action: pan-y; }
-          .sb-m-avatar:after { content: ""; position: absolute; left: 50%; bottom: 4px; width: 60%; height: 22px; translate: -50% 0; border-radius: 50%; pointer-events: none; background: radial-gradient(ellipse at center, rgba(48,42,32,.3), transparent 70%); filter: blur(4px); }
+          .sb-m-avatar:after { content: ""; position: absolute; left: 50%; bottom: 4px; width: 56%; height: 22px; translate: -50% 0; border-radius: 50%; pointer-events: none; background: radial-gradient(ellipse at center, rgba(48,42,32,.3), transparent 70%); filter: blur(4px); }
 
           /* compact closet rail directly under the avatar */
-          .sb-m-closet { min-height: 0; margin-top: 2px; padding-bottom: 10px; }
+          .sb-m-closet { min-height: 0; margin-top: 4px; padding-bottom: 10px; }
           .sb-m-rail { margin-top: 6px; width: 86%; }
           .sb-m-hangers { width: 86%; gap: 10px; }
           .sb-m-hook { height: 14px; }
